@@ -93,7 +93,7 @@ function DeckCreate() {
           <button onClick={handleTagList}>+</button>
         </div>
         {/* List of generated tags */}
-
+        {tagsList.map(tag=>(<p>{tag}</p>))}
 
         {/*//TODO Update languages with Flashcards value / Permitir solo estos languages en flashcards */}
         <div id="languages" >
