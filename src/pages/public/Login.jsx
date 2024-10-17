@@ -1,12 +1,12 @@
 import service from "../../services/config.js";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context.jsx"
 
 function Login() {
 
   const navigate = useNavigate()
-  const { authenticateUser } = useContext(AuthContext)
+  const { isLoggedIn, authenticateUser } = useContext(AuthContext)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,6 +43,10 @@ function Login() {
       }
     }
   };
+
+  useEffect(()=>{
+    if(isLoggedIn) navigate("/profile");  
+  },[])
 
   return(
     <div id="login">

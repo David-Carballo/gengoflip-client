@@ -16,7 +16,6 @@ function AuthWrapper(props) {
   }, [])
 
   const authenticateUser = async () => {
-    console.log("Verificando token del usuario...")
     try {
       const response = await service.get("/auth/verify")
 

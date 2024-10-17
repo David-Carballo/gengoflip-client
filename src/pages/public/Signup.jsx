@@ -1,8 +1,10 @@
 import service from "../../services/config";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/auth.context";
 
 function Signup() {
+  const { isLoggedIn} = useContext(AuthContext);
 
   const navigate = useNavigate()
 
@@ -40,6 +42,10 @@ function Signup() {
       }
     }
   };
+
+  useEffect(()=>{
+    if(isLoggedIn) navigate("/profile");  
+  },[])
 
   return(
     <div id="signup">
