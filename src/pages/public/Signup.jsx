@@ -1,4 +1,4 @@
-import service from "../services/config";
+import service from "../../services/config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

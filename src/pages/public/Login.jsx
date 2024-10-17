@@ -1,7 +1,7 @@
-import service from "../services/config.js";
+import service from "../../services/config.js";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/auth.context.jsx"
+import { AuthContext } from "../../context/auth.context.jsx"
 
 function Login() {
 
