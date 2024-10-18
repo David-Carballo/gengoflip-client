@@ -1,8 +1,9 @@
 import { useState } from "react";
+import service from "../services/config";
 
-function FlashcardCreate({newFlashcard, setNewFlashcard, setFlashcards}) {
+function FlashcardCreate({newFlashcard, setNewFlashcard, setFlashcardsList}) {
 
-  const [translation, setTranslation] = useState({lang:"English", translatedName:"", translatedDesc:""});
+  const [translation, setTranslation] = useState({lang:"English", translatedName:"", translatedDescription:""});
   const [translationsList, setTranslationsList] = useState([]);
 
   //Handle functions
@@ -22,14 +23,22 @@ function FlashcardCreate({newFlashcard, setNewFlashcard, setFlashcards}) {
     setTranslationsList([...translationsList, translation]);
     // setTranslation({lang:"", translatedName:"", translatedDesc:""});
   }
-  const handleAddFlashcard = (e) => {
+  const handleAddFlashcard = async (e) => {
     e.preventDefault();
-    const clone = structuredClone(newFlashcard);
-    clone.translations = translationsList;
-    setNewFlashcard(clone);
-    console.log(clone);
-    setTranslation({lang:"English", translatedName:"", translatedDesc:""});
-    setFlashcards(current => [...current,clone])
+    try {
+      const clone = structuredClone(newFlashcard);
+      clone.translations = translationsList;
+      setNewFlashcard(clone);
+      
+      const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/`, clone);
+      
+      setFlashcardsList(current => [...current,response.data])
+
+      setTranslation({lang:"English", translatedName:"", translatedDescription:""});
+    } 
+    catch (error) {
+      console.log(error);
+    }
   }
 
   return(
@@ -47,7 +56,7 @@ function FlashcardCreate({newFlashcard, setNewFlashcard, setFlashcards}) {
             <option value="Portuguese">Portuguese</option>
             <option value="Italian">Italian</option>
         </select>
-        {translationsList.map(trans => <p>{trans.lang}</p>)}
+        {translationsList.map((trans,index) => <p key={index}>{trans.lang}</p>)}
         <br/>
         <br/>
         <div style={{backgroundColor: "var(--green10-color)"}}>
@@ -63,7 +72,7 @@ function FlashcardCreate({newFlashcard, setNewFlashcard, setFlashcards}) {
           <label>Name</label>
           <input onChange={handleChangeLang} type="text" name="translatedName" value={translation.translatedName}/>
           <label>Description</label>
-          <input onChange={handleChangeLang} type="text" name="translatedDesc" value={translation.translatedDesc}/>
+          <input onChange={handleChangeLang} type="text" name="translatedDescription" value={translation.translatedDescription}/>
           <button onClick={handleAddLang}>+</button>
         </div>
         <br/>

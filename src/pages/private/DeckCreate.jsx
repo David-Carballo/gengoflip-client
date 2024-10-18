@@ -25,7 +25,7 @@ function DeckCreate() {
     imageUrl: "",
     owner: loggedUserId
   })
-  const [flashcards, setFlashcards] = useState([]);
+  const [flashcardsList, setFlashcardsList] = useState([]);
 
   //Handle states changes
   const handleName = (e) => setDeckName(e.target.value);
@@ -44,42 +44,32 @@ function DeckCreate() {
     let index = newLangs.indexOf(e.target.value)
     if(index > -1) newLangs.splice(index, 1)
     else newLangs.push(e.target.value);
-    console.log(newLangs);
+
     setLanguages(newLangs);
   }
 
   const handleCreate = async (e) => {
     e.preventDefault();
-
-    const newDeck = {
-      deckName,
-      imageUrl,
-      description,
-      tags: tagsList,
-      languages,
-      owner: loggedUserId
-    }
-    console.log(newDeck);
-
-    
     try {
+      const newDeck = {
+        deckName,
+        imageUrl,
+        description,
+        tags: tagsList,
+        languages,
+        flashcards: []
+      }
+
+      // const responseMany = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/many`, flashcardsList);
+
+      newDeck.flashcards = flashcardsList.map((e)=>e._id);
+
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/decks/`, newDeck);
-      console.log(response);
-      navigate("/profile");
+
     } 
     catch (error) {
       console.log(error);
     }
-  }
-
-  //Aux functions
-  const clearAllStates = () => {
-    setDeckName("");
-    setImageUrl("");
-    setDescription("");
-    setTag("");
-    setTagsList([]);
-    setLanguages([]);
   }
 
   return(
@@ -104,7 +94,7 @@ function DeckCreate() {
           <button onClick={handleTagList}>+</button>
         </div>
         {/* List of generated tags */}
-        {tagsList.map(tag=>(<p>{tag}</p>))}
+        {tagsList.map((tag,index)=>(<p key={`tag-${index}`}>{tag}</p>))}
         <br/>
         {/*//TODO Update languages with Flashcards value / Permitir solo estos languages en flashcards */}
         <div id="languages-checkbox">
@@ -123,7 +113,7 @@ function DeckCreate() {
         </div>
 
         {/* Flashcards Creation */}
-        {flashcards.map((flashcard,index)=>{
+        {flashcardsList.map((flashcard,index)=>{
           return(
             <div key= {`flash-${index}`} id="flashcard-container">
               <p>{flashcard.cardName}</p>
@@ -131,10 +121,9 @@ function DeckCreate() {
           )
         })}
         
-        <FlashcardCreate newFlashcard={newFlashcard} setNewFlashcard={setNewFlashcard} setFlashcards={setFlashcards}/>
+        <FlashcardCreate newFlashcard={newFlashcard} setNewFlashcard={setNewFlashcard} setFlashcardsList={setFlashcardsList}/>
 
         <br/>
-        <button>Add New Flashcard</button>
         <br/>
         {/* <button>+</button> */}
 
