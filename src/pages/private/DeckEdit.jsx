@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import service from "../../services/config";
+import FlashcardDetails from "../../components/FlashcardDetails";
 
 function DeckEdit() {
   const navigate = useNavigate();
@@ -64,7 +65,6 @@ function DeckEdit() {
     
     try {
       const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/decks/${params.deckId}`, deckDetails);
-      console.log(response);
     } 
     catch (error) {
       console.log(error);
@@ -108,7 +108,7 @@ function DeckEdit() {
         {/* List of generated tags */}
         {deckDetails.tags.map(tag=>(<p key={tag}>{tag}</p>))}
 
-        <div id="languages" >
+        <div id="languages-checkbox" >
           <label>English</label>
           <input onChange={handleChangeLang} type="checkbox" name="en" value="English" defaultChecked={deckDetails.languages.includes("English")}/>
           <label>Spanish</label>
@@ -123,7 +123,9 @@ function DeckEdit() {
           <input onChange={handleChangeLang} type="checkbox" name="it" value="Italian" defaultChecked={deckDetails.languages.includes("Italian")}/>
         </div>
 
-        {/* Flashcards Creation */}
+        {/* //TODO Flashcards Creation */}
+        {/* {deckDetails.flashcards.map((fc,index)=><p key={`fc-${index}`}>{fc}</p>)} */}
+        {deckDetails.flashcards.map((fc,index)=><FlashcardDetails key={`fc-${index}`} flashId={fc}/>)}
 
         {/* <button>+</button> */}
 
