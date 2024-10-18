@@ -32,7 +32,7 @@ function Login() {
 
       await authenticateUser()
 
-      navigate("/contact")
+      navigate("/profile")
 
     } catch (error) {
       console.log(error)

@@ -2,11 +2,13 @@ import { useContext, useState } from 'react';
 import '../../styles/Deck.css'
 import service from '../../services/config';
 import { AuthContext } from '../../context/auth.context';
+import { useNavigate } from 'react-router-dom';
+import FlashcardCreate from '../../components/FlashcardCreate';
 
 function DeckCreate() {
 
   const {loggedUserId} = useContext(AuthContext);
-
+  const navigate = useNavigate();
 
   //States
   const [deckName, setDeckName] = useState("");
@@ -15,6 +17,15 @@ function DeckCreate() {
   const [tag, setTag] = useState("");
   const [tagsList, setTagsList] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [newFlashcard, setNewFlashcard] = useState({
+    cardName: "",
+    description: "",
+    originalLang: "",
+    translations: [],
+    imageUrl: "",
+    owner: loggedUserId
+  })
+  const [flashcards, setFlashcards] = useState([]);
 
   //Handle states changes
   const handleName = (e) => setDeckName(e.target.value);
@@ -54,7 +65,7 @@ function DeckCreate() {
     try {
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/decks/`, newDeck);
       console.log(response);
-      // clearAllStates();
+      navigate("/profile");
     } 
     catch (error) {
       console.log(error);
@@ -94,9 +105,9 @@ function DeckCreate() {
         </div>
         {/* List of generated tags */}
         {tagsList.map(tag=>(<p>{tag}</p>))}
-
+        <br/>
         {/*//TODO Update languages with Flashcards value / Permitir solo estos languages en flashcards */}
-        <div id="languages" >
+        <div id="languages-checkbox">
           <label>English</label>
           <input onChange={handleChangeLang} type="checkbox" name="en" value="English" />
           <label>Spanish</label>
@@ -112,7 +123,19 @@ function DeckCreate() {
         </div>
 
         {/* Flashcards Creation */}
+        {flashcards.map((flashcard,index)=>{
+          return(
+            <div key= {`flash-${index}`} id="flashcard-container">
+              <p>{flashcard.cardName}</p>
+            </div>
+          )
+        })}
+        
+        <FlashcardCreate newFlashcard={newFlashcard} setNewFlashcard={setNewFlashcard} setFlashcards={setFlashcards}/>
 
+        <br/>
+        <button>Add New Flashcard</button>
+        <br/>
         {/* <button>+</button> */}
 
       </form>

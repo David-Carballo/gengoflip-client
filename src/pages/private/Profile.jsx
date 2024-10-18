@@ -38,6 +38,7 @@ function Profile() {
     try {
       const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/users/profile`, userData, {new: true})
       console.log(response)
+      setIsEditMode(false);
     } 
     catch (error) {
       console.log(error);  
@@ -58,8 +59,10 @@ function Profile() {
       <div>
         <label>First Name:</label>
         <input onChange={handleChange} type="text" name="firstName" readOnly={!isEditMode} value={userData.firstName} />
-        <label>Last Name:</label>
-        <input onChange={handleChange} type="text" name="lastName" readOnly={!isEditMode} value={userData.lastName} />
+      </div>
+      <div>
+          <label>Last Name:</label>
+          <input onChange={handleChange} type="text" name="lastName" readOnly={!isEditMode} value={userData.lastName} />
       </div>
 
 

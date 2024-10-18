@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
-import './App.css'
-import { useContext } from 'react'
+import './styles/App.css'
+import { useContext, useState } from 'react'
 
 import Navbar from './components/Navbar'
 import Private from './components/Private'
@@ -24,9 +24,11 @@ import { AuthContext } from './context/auth.context'
 
 function App() {
   const {isLoggedIn} = useContext(AuthContext)
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   return (
-    <>  
+    <div id="app" className={isDarkTheme? "dark-theme":"light-theme"}>  
+      <button onClick={()=> {setIsDarkTheme(!isDarkTheme)}}>Theme</button>
       {!isLoggedIn && <Navbar/>}
       <Routes>
         <Route path="/" element={<Home/>}/>
@@ -43,7 +45,7 @@ function App() {
       </Routes>
       <Footer/>
 
-    </>
+    </div>
   )
 }
 

@@ -1,0 +1,18 @@
+/* ? MOBILE */
+#root {
+  min-width: 100svw;
+  text-align: center;
+}
+
+/* ? TABLET */
+@media (min-width: 480px) {
+
+
+}
+
+
+/* ? PC */
+@media (min-width: 1024px) {
+
+
+}
