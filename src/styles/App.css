@@ -4,6 +4,12 @@
   text-align: center;
 }
 
+#app {
+  min-width: 100svw;
+  min-height: 100svh;
+  text-align: center;
+}
+
 /* ? TABLET */
 @media (min-width: 480px) {
 

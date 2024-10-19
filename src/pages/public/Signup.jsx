@@ -1,7 +1,8 @@
 import service from "../../services/config";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
+import '../../styles/Signup.css'
 
 function Signup() {
   const { isLoggedIn} = useContext(AuthContext);
@@ -49,50 +50,28 @@ function Signup() {
 
   return(
     <div id="signup">
-
-      <h1>Formulario de Registro</h1>
-    
-      <form onSubmit={handleSignup}>
-
-        <label>Correo Electronico:</label>
-        <input
-       
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
-        />
-
-        <br />
-
-        <label>Username:</label>
-        <input
+      <div id="signup-card"  className="flex-r">
+        <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="" className="w-50"/>
+        <div className="w-100 flex-c ">
+          <h3>Create an account</h3>
         
-          type="text"
-          name="username"
-          value={username}
-          onChange={handleUsernameChange}
-        />
+          <form onSubmit={handleSignup} className="flex-c align-center g10 w-50">
+            <label className="w-100 start">Email</label>
+            <input className="w-100 start" type="email" name="email" value={email} onChange={handleEmailChange}/>
+            <label className="w-100 start">Username</label>
+            <input className="w-100 start" type="text" name="username" value={username} onChange={handleUsernameChange}/>
+            <label className="w-100 start">Password</label>
+            <input className="w-100 start" type="password" name="password" value={password} onChange={handlePasswordChange}/>
 
-        <br />
+            <button type="submit">Sign up</button>
 
-        <label>Contraseña:</label>
-        <input
+            {errorMessage && <p>{errorMessage}</p>}
+
+          </form>
+          <p>Already have an account? <Link to="/login">Log in</Link></p>
        
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-
-        <br />
-
-        <button type="submit">Registrar</button>
-
-        {errorMessage && <p>{errorMessage}</p>}
-
-      </form>
-      
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,46 @@
+/* ? MOBILE */
+
+#login{
+  min-width: 100%;
+  min-height: 90svh;
+  padding: 5%;
+  border: 2px dotted red;
+  background-color: var(--background-color);
+  place-content: center;
+}
+
+#login-card img{
+  display: none;
+}
+
+#login-card{
+  background-color: var(--secondary-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 2px var(--dark-color);
+  overflow: hidden;
+  border: 5px solid var(--light-color);
+}
+
+
+
+/* ? TABLET */
+@media (min-width: 480px) {
+
+  #login-card img{
+    display:initial;
+    width: 50%;
+    max-width: 50%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    overflow: scroll;
+    display: block;
+  }
+ 
+}
+
+
+/* ? PC */
+@media (min-width: 1024px) {
+
+
+}

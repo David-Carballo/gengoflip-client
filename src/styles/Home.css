@@ -1,0 +1,33 @@
+/* import '../../styles/Contact.css' */
+
+/* ? MOBILE */
+
+#home{
+  min-width: 90%;
+  min-height: 95svh;
+  padding: 5%;
+  border: 2px dotted red;
+  background-color: var(--background-color);
+}
+
+#home *{
+  z-index: 1;
+}
+
+#home img{
+  position: absolute;
+  z-index: 0;
+}
+
+/* ? TABLET */
+@media (min-width: 480px) {
+
+
+}
+
+
+/* ? PC */
+@media (min-width: 1024px) {
+
+
+}

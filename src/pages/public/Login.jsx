@@ -2,6 +2,7 @@ import service from "../../services/config.js";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context.jsx"
+import '../../styles/Login.css'
 
 function Login() {
 
@@ -50,34 +51,24 @@ function Login() {
 
   return(
     <div id="login">
-      <h1>Formulario de Acceso</h1>
+      <div id="login-card" className="flex-r">
+        <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="" className="w-50"/>
+        <div className="w-100 flex-c ">
+          <h3>Welcome back</h3>
+          <p>Enter your email and password to continue.</p>
+          <form onSubmit={handleLogin} className="flex-c align-center g10 w-50">
+            <label className="w-100 start">Email</label>
+            <input className="w-100 start" type="email" name="email" value={email} onChange={handleEmailChange}/>
+            <label className="w-100 start">Password</label>
+            <input className="w-100 start" type="password" name="password" value={password} onChange={handlePasswordChange}/>
 
-      <form onSubmit={handleLogin}>
-        <label>Correo Electronico:</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
-        />
+            <button type="submit">Acceder</button>
+            {errorMessage && <p>{errorMessage}</p>}
 
-        <br />
+          </form>
+        </div>
+      </div>
 
-        <label>Contraseña:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-
-        <br />
-
-        <button type="submit">Acceder</button>
-
-        {errorMessage && <p>{errorMessage}</p>}
-
-      </form>
     </div>
   );
 }

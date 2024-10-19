@@ -1,0 +1,56 @@
+
+/* ? MOBILE */
+
+#profile{
+  min-width: 100%;
+  min-height: 95svh;
+  padding: 5%;
+  border: 2px dotted red;
+  background-color: var(--background-color);
+}
+
+#profile-card{
+  min-width: 50%;
+  position: relative;
+  background-color: var(--secondary-color);
+  padding: 5%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 2px var(--dark-color);
+}
+
+#profile-card div{
+  width: 100%;
+}
+
+#profile-card img{
+  width: 50%;
+  aspect-ratio: 1/1;
+  max-width: 100px;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+#profile-card .edit-container{
+  position: absolute;
+  right: 5%;
+}
+
+/* ? TABLET */
+@media (min-width: 480px) {
+
+
+
+  #profile-card{
+    max-width: 50%;
+    margin-left: 5%;
+  }
+
+}
+
+
+/* ? PC */
+@media (min-width: 1024px) {
+
+
+}

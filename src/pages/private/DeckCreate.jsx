@@ -67,7 +67,7 @@ function DeckCreate() {
       newDeck.flashcards = flashcardsList.map((e)=>e._id);
 
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/decks/`, newDeck);
-
+      // navigate(`/decks/${response.data._id}`);
     } 
     catch (error) {
       console.log(error);

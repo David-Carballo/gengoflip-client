@@ -40,7 +40,7 @@ function FlashcardCreate({newFlashcard, setNewFlashcard, setFlashcardsList}) {
       console.log(error);
     }
   }
-
+ 
   return(
     <div id="flashcard-create" style={{backgroundColor: "var(--green20-color)"}}>
         <label>Name</label>

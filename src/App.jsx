@@ -20,6 +20,7 @@ import DeckCreate from './pages/private/DeckCreate'
 import DeckEdit from './pages/private/DeckEdit'
 
 import { AuthContext } from './context/auth.context'
+import Sidebar from './components/Sidebar'
 
 
 function App() {
@@ -28,8 +29,8 @@ function App() {
 
   return (
     <div id="app" className={isDarkTheme? "dark-theme":"light-theme"}>  
-      <button onClick={()=> {setIsDarkTheme(!isDarkTheme)}}>Theme</button>
-      {!isLoggedIn && <Navbar/>}
+      {!isLoggedIn && <Navbar setIsDarkTheme={setIsDarkTheme}/>}
+      {isLoggedIn && <Sidebar setIsDarkTheme={setIsDarkTheme}/>}
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>
@@ -43,7 +44,8 @@ function App() {
         <Route path="/decks/create" element={<Private><DeckCreate/></Private>}/>
         <Route path="/decks/:deckId/edit" element={<Private><DeckEdit/></Private>}/>
       </Routes>
-      <Footer/>
+      {!isLoggedIn && <Footer/>}
+      
 
     </div>
   )

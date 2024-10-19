@@ -1,7 +1,7 @@
 function Footer() {
   return(
     <div id="footer">
-      <p>Footer</p>
+      <p>🐈Github</p>
     </div>
   );
 }

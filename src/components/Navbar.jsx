@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-function Navbar() {
+function Navbar({setIsDarkTheme}) {
   return(
     <nav>
-      <Link to="/">Home</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/signup">Signup</Link>
+      <button onClick={()=> {setIsDarkTheme((current)=>!current)}}>Theme</button>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/contact">Contact</NavLink>
+      <NavLink to="/login">Login</NavLink>
+      <NavLink to="/signup">Signup</NavLink>
     </nav>
   );
 }

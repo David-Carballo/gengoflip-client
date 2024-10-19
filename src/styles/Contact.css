@@ -1,0 +1,23 @@
+/* ? MOBILE */
+
+#contact{
+  min-width: 100%;
+  min-height: 90svh;
+  padding: 5%;
+  border: 2px dotted red;
+  background-color: var(--background-color);
+}
+
+
+
+/* ? TABLET */
+@media (min-width: 480px) {
+
+}
+
+
+/* ? PC */
+@media (min-width: 1024px) {
+
+
+}
