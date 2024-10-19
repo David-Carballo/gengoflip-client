@@ -27,17 +27,19 @@ function DeckCreate() {
   })
   const [flashcardsList, setFlashcardsList] = useState([]);
 
-  //Handle states changes
+  //Handle input changes
   const handleName = (e) => setDeckName(e.target.value);
   const handleImage = (e) => setImageUrl(e.target.value);
   const handleDesc = (e) => setDescription(e.target.value);
   const handleTag = (e) => setTag(e.target.value);
+  //Handle list of tags and add it to deck
   const handleTagList = (e) => {
     e.preventDefault();
     const newTags = [...tagsList, tag]
     setTag("");
     setTagsList(newTags);
   }
+  //Handle value of languages checkboxes
   const handleChangeLang = (e) => {
     const newLangs = [...languages];
     //Si el lenguaje estaba incluido en el estado eliminarlo
@@ -47,7 +49,7 @@ function DeckCreate() {
 
     setLanguages(newLangs);
   }
-
+  //Call to Post new deck in db
   const handleCreate = async (e) => {
     e.preventDefault();
     try {

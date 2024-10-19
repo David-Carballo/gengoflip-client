@@ -11,8 +11,7 @@ function DeckEdit() {
     getDeckDetails();
   },[])
 
-  
-  //Get Deck Details
+  //Get details of this deck
   const getDeckDetails = async () => {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/decks/${params.deckId}`);
@@ -38,7 +37,9 @@ function DeckEdit() {
     deckClone.description = e.target.value
     setDeckDetails(deckClone);
   }
+  //Handle tag input
   const handleTag = (e) => setTag(e.target.value);
+  //Handle list of tags and add it to deck
   const handleTagList = (e) => {
     e.preventDefault();
 
@@ -49,6 +50,7 @@ function DeckEdit() {
     setDeckDetails(deckClone);
     console.log(deckClone);
   }
+  //Handle value of languages checkboxes
   const handleChangeLang = (e) => {
     const newLangs = [...deckDetails.languages];
     //Si el lenguaje estaba incluido en el estado eliminarlo
@@ -60,6 +62,7 @@ function DeckEdit() {
     setDeckDetails(deckClone);
   }
 
+  //Call to Update changes of this deck
   const handleEdit = async (e) => {
     e.preventDefault();
     
@@ -70,7 +73,7 @@ function DeckEdit() {
       console.log(error);
     }
   }
-
+  //Call to Delete this deck
   const handleDelete = async (e) => {
     e.preventDefault();
     
@@ -125,7 +128,7 @@ function DeckEdit() {
 
         {/* //TODO Flashcards Creation */}
         {/* {deckDetails.flashcards.map((fc,index)=><p key={`fc-${index}`}>{fc}</p>)} */}
-        {deckDetails.flashcards.map((fc,index)=><FlashcardDetails key={`fc-${index}`} flashId={fc}/>)}
+        {deckDetails.flashcards.map((fc,index)=><FlashcardDetails key={`fc-${index}`} flashId={fc} setDeckDetails={setDeckDetails}/>)}
 
         {/* <button>+</button> */}
 

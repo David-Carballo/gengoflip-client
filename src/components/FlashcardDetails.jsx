@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import service from "../services/config";
 
-function FlashcardDetails({flashId}) {
+function FlashcardDetails({flashId, setDeckDetails}) {
 
   useEffect(()=>{
     getFlashcardData();
   }
   ,[])
 
+  //Get details of this flashcard
   const getFlashcardData = async () => {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`)
@@ -17,19 +18,23 @@ function FlashcardDetails({flashId}) {
       console.log(error);
     }
   }
+  //Change to edit Mode
+  const handleEditMode = (e) => {
+    e.preventDefault();
+    setIsEditMode(!isEditMode);
+  }
   
   const [flashcardData, setFlashcardData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
+
+  //Change values of this flashcard
   const handleChange = (e) => {
     const clone = structuredClone(flashcardData);
     clone[e.target.name] = e.target.value;
     setFlashcardData(clone)
   }
-  const handleEdit = (e) => {
-    e.preventDefault();
-    setIsEditMode(!isEditMode);
-  }
+  //Call to Add new flashcard to db
   const handleSave = async (e) => {
     e.preventDefault();
     try {
@@ -39,6 +44,23 @@ function FlashcardDetails({flashId}) {
     } 
     catch (error) {
       console.log(error);  
+    }
+  }
+  //Call to Delete this flashcard
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    try {
+      console.log(flashId);
+      await service.delete(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`);
+      setDeckDetails((current) => {
+        const clone = structuredClone(current);
+        clone.flashcards.splice(clone.flashcards.indexOf(flashId),1);
+        return clone;
+      })
+    } 
+    catch (error) {
+      console.log(error)  
     }
   }
 
@@ -55,7 +77,8 @@ function FlashcardDetails({flashId}) {
       <input onChange={handleChange} type="text" name="originalLang" value={flashcardData.originalLang} disabled={!isEditMode}/>
 
       {isEditMode && <button onClick={handleSave}>Save</button>}
-      {!isEditMode && <button onClick={handleEdit}>Edit</button>}
+      {!isEditMode && <button onClick={handleEditMode}>Edit</button>}
+      {<button onClick={handleDelete}>Delete</button>}
     </div>
   );
 }
