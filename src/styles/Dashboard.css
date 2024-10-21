@@ -1,0 +1,40 @@
+/* import '../../styles/Contact.css' */
+
+/* ? MOBILE */
+
+#dashboard{
+  min-width: 100%;
+  min-height: 95svh;
+  padding: 5%;
+  border: 2px dotted red;
+  background-color: var(--background-color);
+}
+
+#dashboard-panel{
+  background-color: var(--green10-color);
+  height: 200px;
+  width: clamp(50%, 80%,90%);
+}
+
+#dashboard-profile img{
+  width: 50%;
+  aspect-ratio: 1/1;
+  max-width: 100px;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+  border: 2px solid var(--background-color);
+}
+
+/* ? TABLET */
+@media (min-width: 480px) {
+
+
+}
+
+
+/* ? PC */
+@media (min-width: 1024px) {
+
+
+}

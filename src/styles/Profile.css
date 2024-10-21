@@ -36,6 +36,16 @@
   right: 5%;
 }
 
+#my-decks{
+  border-radius: 10px;
+  background-color: var(--green20-color);
+  padding: 5px;
+}
+
+#my-decks img{
+  filter: brightness(0.5);
+}
+
 /* ? TABLET */
 @media (min-width: 480px) {
 

@@ -1,5 +1,78 @@
-#deck-create form{
+/* import '../../styles/Contact.css' */
+
+/* ? MOBILE */
+
+#deck-create {
+  min-width: 100%;
+  min-height: 95svh;
+  padding: 5%;
+  border: 2px dotted red;
+  background-color: var(--background-color);
+  place-content: center;
+}
+
+#create-form{
+  padding: 0 20px;
+  width: 100%;
+  gap: 20px;
+  justify-content: space-between;
+  background-color: var(--dark-color);
+}
+
+#languages-checkbox{
+  background-color: var(--dark-color);
+}
+
+#container-create{
+  width: 20px;
+  aspect-ratio: 1;
+  background-color: var(--green10-color);
+  border-radius: 5px;
+  place-content: center;
+}
+
+#deck-tags{
+  padding: 0 10px;
+  background-color: var(--green40-color);
+  color: white;
+  font-size: 0.6rem;
+  border-radius: 10px;
+}
+
+#deck-card{
+  border-radius: 10px;
+  padding: 10px;
+  background-color: var(--green30-color);
   display: flex;
-  flex-direction: column;
-  gap: 20px
+  flex-direction: row;
+  justify-content: space-between;
+}
+#deck-card img{
+  width: 15px;
+}
+
+/* ? TABLET */
+@media (min-width: 480px) {
+
+  #deck-create {
+    min-height: 100svh;
+  }
+
+  #create-form{
+    border: 2px dotted blue;
+    padding: 0 20px;
+
+    max-width: 80%;
+    height: 100%;
+    gap: 20px;
+    justify-content: space-between;
+  }
+
+}
+
+
+/* ? PC */
+@media (min-width: 1024px) {
+
+
 }

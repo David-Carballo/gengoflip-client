@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import service from "../../services/config";
 import { AuthContext } from "../../context/auth.context";
 import '../../styles/Profile.css'
+import Deck from "../../components/Deck";
 
 function Profile() {
 
@@ -13,6 +14,7 @@ function Profile() {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/users/profile`)
       setUserData(response.data);
+      console.log(response.data)
     } 
     catch (error) {
       console.log(error)
@@ -82,6 +84,17 @@ function Profile() {
       {/* User Progress */}
 
       {/* My sets */}
+      <div>
+        <p>My decks</p>
+        {userData.deckLibrary.length && userData.deckLibrary.map((deck,index) => {
+          return(
+            <div key={index} id="my-decks">
+              <img src={deck.deckId.imageUrl} alt="deck image"/> 
+              <p>{deck.deckId.deckName}</p>
+            </div>
+          )
+        })}
+      </div>
     </div>
   );
 }

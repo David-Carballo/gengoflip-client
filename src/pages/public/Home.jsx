@@ -15,8 +15,8 @@ function Home() {
   return(
     <div id="home">
       <h1>Aprende idiomas con nuestras flashcards personalizadas</h1>
-      <img src={bgImg} alt="background image"/> 
-      <Link to="/signup">Get started ></Link>
+      {/* <img src={bgImg} alt="background image"/>  */}
+      <Link to="/signup">Get started</Link>
       <p>Crea, organiza y revisa tus flashcards de idiomas personalizadas."</p>
       <p>Practica vocabulario y gramática de forma fácil y efectiva.</p>
       <p>Ideal para cualquier nivel de aprendizaje.</p>

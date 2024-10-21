@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import service from "../../services/config";
+import Deck from "../../components/Deck";
+import '../../styles/Library.css'
 
 function Library() {
   
@@ -27,7 +29,7 @@ function Library() {
   return(
     <div id="library">
       <h1>Library</h1>
-
+      {allDecks.map((deck,index)=> <Deck key={`dcard-${index}`} deck={deck}/>)}
     </div>
   );
 }
