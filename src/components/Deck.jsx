@@ -17,10 +17,9 @@ function Deck({deck}) {
       <div className="flex-c">
         <p>{deckName}</p>
         {tags.map((tag,index) => {
-
-        return (<label key={`tag-${index}`} id="deck-tags">{tag}</label>)
+          return (<label key={`tag-${index}`} id="deck-tags">{tag}</label>)
+          })
         }
-        )}
         <br/>
         <div className="flex-r">
           <div className="flex-r">

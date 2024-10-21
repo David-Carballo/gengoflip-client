@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import service from "../services/config";
 
-function FlashcardDetails({flashId, setDeckDetails}) {
+function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
 
   useEffect(()=>{
     getFlashcardData();
@@ -11,7 +11,9 @@ function FlashcardDetails({flashId, setDeckDetails}) {
   //Get details of this flashcard
   const getFlashcardData = async () => {
     try {
+      console.log(flashId)
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`)
+      console.log(response.data)
       setFlashcardData(response.data);
     } 
     catch (error) {
@@ -25,7 +27,7 @@ function FlashcardDetails({flashId, setDeckDetails}) {
   }
   
   const [flashcardData, setFlashcardData] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(true);
 
 
   //Change values of this flashcard
@@ -64,21 +66,80 @@ function FlashcardDetails({flashId, setDeckDetails}) {
     }
   }
 
+  const handleCloseCreate = (e) => {
+    e.preventDefault();
+    setIsCreating((current)=>!current);
+  }
+  const handleFileUpload = async (e) => {
+    // console.log("The file to be uploaded is: ", e.target.files[0]);
+
+    if (!e.target.files[0]) {
+      // to prevent accidentally clicking the choose file button and not selecting a file
+      return;
+    }
+
+    // setIsUploading(true); // to start the loading animation
+
+    const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
+    uploadData.append("image", e.target.files[0]);
+
+    try {
+      // !IMPORTANT: Adapt the request structure to the one in your proyect (services, .env, auth, etc...)
+      const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/uploads`, uploadData)
+      console.log(response.data.imageUrl);
+      const clone = structuredClone(newFlashcard);
+      clone.imageUrl = response.data.imageUrl;
+      console.log(clone);
+      setNewFlashcard(clone);
+      // setImageUrl(response.data.imageUrl);
+      //                          |
+      //     this is how the backend sends the image to the frontend => res.json({ imageUrl: req.file.path });
+
+      // setIsUploading(false); // to stop the loading animation
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   if(!flashcardData) return(<h3>Loading...</h3>)
 
   return(
-    <div id="flashcard-details" style={{backgroundColor: "var(--green10-color)"}}>
-      <p>{flashId}</p>
-      <label>Name</label>
-      <input onChange={handleChange} type="text" name="cardName" value={flashcardData.cardName} disabled={!isEditMode}/>
-      <label>Description</label>
-      <input onChange={handleChange} type="text" name="description" value={flashcardData.description} disabled={!isEditMode}/>
-      <label>Original Language</label>
-      <input onChange={handleChange} type="text" name="originalLang" value={flashcardData.originalLang} disabled={!isEditMode}/>
+    <div id="flashcard-bg">
+      <div id="flashcard-details" className="flex-c g10">
+        {/* <button onClick={handleCloseCreate}>X</button> */}
+        <div className="flex-r w-100 justify-between">
+          <div id="profile-img">
+            <div id="upload-btn">
+              <input id="input-btn" type="file" name="imageUrl" onChange={handleFileUpload}/> 
+            </div>
+            <img src={flashcardData.imageUrl} alt="flashcard image" hidden={!flashcardData.imageUrl}/>
+          </div>
+          <input onChange={handleChange} placeholder="Name" type="text" name="cardName" value={flashcardData.cardName} disabled={!isEditMode}/>
+        </div>
+        <div className="flex-c align-center w-100">
+          {/* <label>Description</label> */}
+          <textarea onChange={handleChange} className="w-100" placeholder="No description"type="text" name="description" rows="3" value={flashcardData.description} disabled={!isEditMode}/>
+        </div>
+        <div className="flex-r justify-start w-100 g20">
+          <label>Original Language</label>
+          <select onChange={handleChange} value={flashcardData.originalLang} name="originalLang" required disabled={!isEditMode}>
+              <option value="English">English</option>
+              <option value="Spanish">Spanish</option>
+              <option value="French">French</option>
+              <option value="German">German</option>
+              <option value="Portuguese">Portuguese</option>
+              <option value="Italian">Italian</option>
+          </select>
+        </div>
+        <div className="flex-r g10">
+          {isEditMode && <button onClick={handleEditMode}>Back</button>}
+          {isEditMode && <button onClick={handleSave}>Save</button>}
+          {!isEditMode && <button onClick={handleEditMode}>Edit</button>}
+          {<button onClick={handleDelete}>Delete</button>}
 
-      {isEditMode && <button onClick={handleSave}>Save</button>}
-      {!isEditMode && <button onClick={handleEditMode}>Edit</button>}
-      {<button onClick={handleDelete}>Delete</button>}
+        </div>
+      </div>
     </div>
   );
 }

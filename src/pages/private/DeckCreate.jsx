@@ -17,13 +17,14 @@ function DeckCreate() {
   const [tag, setTag] = useState("");
   const [tagsList, setTagsList] = useState([]);
   const [languages, setLanguages] = useState([]);
+  //! DONT PASS OWNER IN FRONTEND
   const [newFlashcard, setNewFlashcard] = useState({
     cardName: "",
     description: "",
     originalLang: "",
     translations: [],
     imageUrl: "",
-    owner: loggedUserId
+    owner: loggedUserId 
   })
   const [flashcardsList, setFlashcardsList] = useState([]);
   const [isCreating, setIsCreating] = useState(false)
@@ -115,7 +116,7 @@ function DeckCreate() {
             <div id="upload-btn">
               <input id="input-btn" type="file" name="imageUrl" onChange={handleFileUpload}/> 
             </div>
-            <img src={imageUrl} alt="flashcard image" hidden={!imageUrl}/>
+            <img src={imageUrl} alt="deck image" hidden={!imageUrl}/>
           </div>
           <input onChange={handleName} placeholder="Title" type="text" name="name" value={deckName}/>
         </div>
@@ -123,7 +124,6 @@ function DeckCreate() {
         {/* List of generated tags */}
         <div className='flex-r g10 w-100'>
           {tagsList.map((tag,index) => {
-
               return (<label key={`tag-${index}`} id="deck-tags">{tag}</label>)
             }
           )}
