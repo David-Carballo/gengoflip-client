@@ -1,14 +1,19 @@
 import { useState } from "react";
 import service from "../services/config";
 import '../styles/Flashcard.css';
-import flag from "../assets/alert-circle.svg"
+import enIcon from "../assets/en.png"
+import esIcon from "../assets/es.png"
+import frIcon from "../assets/fr.png"
+import deIcon from "../assets/de.png"
+import ptIcon from "../assets/pt.png"
+import itIcon from "../assets/it.png"
 
 function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlashcardsList}) {
 
   const [translation, setTranslation] = useState({lang:"English", translatedName:"", translatedDescription:""});
   const [translationsList, setTranslationsList] = useState([]);
+  
   //Handle functions
-
   const handleChangeFlashcard = (e) => {
     const clone = structuredClone(newFlashcard);
     clone[e.target.name] = e.target.value;
@@ -24,7 +29,6 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
     setTranslationsList([...translationsList, translation]);
     // setTranslation({lang:"", translatedName:"", translatedDesc:""});
   }
-  
   const handleAddFlashcard = async (e) => {
     e.preventDefault();
     try {
@@ -37,6 +41,7 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
       setFlashcardsList(current => [...current,response.data])
 
       setTranslation({lang:"English", translatedName:"", translatedDescription:""});
+      setIsCreating(false);
     } 
     catch (error) {
       console.log(error);
@@ -78,12 +83,23 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
     }
   }
 
+  //Aux functions
+  const getFlag = (lang) => {
+    if(lang === "English") return enIcon;
+    else if(lang === "Spanish") return esIcon
+    else if(lang === "French") return frIcon
+    else if(lang === "German") return deIcon
+    else if(lang === "Portuguese") return ptIcon
+    else if(lang === "Italian") return itIcon
+  }
  
   return(
-    <div id="flashcard-bg">
+    <div id="flashcard-bg" className="flex-r center">
       <div id="flashcard-create" className="flex-c g10"> 
-        <button onClick={handleCloseCreate}>X</button>
-        <div className="flex-r w-100 justify-between">
+        <div className="w-100 flex-r justify-end">
+          <button onClick={handleCloseCreate}>X</button>
+        </div>
+        <div className="flex-r w-100 g20">
           <div id="profile-img">
             <div id="upload-btn">
               <input id="input-btn" type="file" name="imageUrl" onChange={handleFileUpload}/> 
@@ -92,10 +108,9 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
           </div>
           <input onChange={handleChangeFlashcard} placeholder="Name" type="text" name="cardName" value={newFlashcard.cardName}/>
         </div>
-        <div className="flex-c align-center w-100">
-          {/* <label>Description</label> */}
+        {/* <div className="flex-c align-center w-100">
           <textarea onChange={handleChangeFlashcard} className="w-100" placeholder="Write here the flashcard's description..."type="text" name="description" rows="3" value={newFlashcard.description}/>
-        </div>
+        </div> */}
         <div className="flex-r justify-start w-100 g20">
           <label>Original Language</label>
           <select onChange={handleChangeFlashcard} value={newFlashcard.originalLang} name="originalLang" required>
@@ -107,12 +122,19 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
               <option value="Italian">Italian</option>
           </select>
         </div>
-        {translationsList.map((trans,index) => <p key={index}>{trans.lang}</p>)}
-        <br/>
-        <br/>
-        <div id="new-translation" className="flex-c justify-around w-100">
+        <div className="flex-c g10 align-start w-100">
+          {translationsList.map((trans,index) =>{
+            return(
+              <div className="flex-r g10">
+                <img src={getFlag(trans.lang)} alt="language flag" className="flags"/>
+                <p key={index}>{trans.translatedName}</p>
+              </div>
+            )
+          })}
+        </div>
+        <div id="new-translation" className="flex-c justify-around align-start w-100">
+          <label>Add translation: </label>
           <div className="flex-r justify-start w-100 g20">
-            <label>New Translation: </label>
             <select onChange={handleChangeLang} name="lang" value={translation.lang} required>
                 <option value="English">English</option>
                 <option value="Spanish">Spanish</option>
@@ -121,14 +143,14 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
                 <option value="Portuguese">Portuguese</option>
                 <option value="Italian">Italian</option>
             </select>
-          </div>
-          <div className="w-100">
-            <div className="flex-c g10 align-start w-100">
-              <input onChange={handleChangeLang} placeholder="Name" type="text" name="translatedName" value={translation.translatedName}/>
-              <textarea onChange={handleChangeLang} className="w-100" placeholder="Description" type="text" name="translatedDescription" value={translation.translatedDescription}/>
-            </div>
+            <input onChange={handleChangeLang} placeholder="Name" type="text" name="translatedName" value={translation.translatedName}/>
             <button onClick={handleAddLang}>+</button>
           </div>
+          {/* <div className="w-100">
+            <div className="flex-c g10 align-start w-100">
+              <textarea onChange={handleChangeLang} className="w-100" placeholder="Description" type="text" name="translatedDescription" value={translation.translatedDescription}/>
+            </div>
+          </div> */}
         </div>
         <button id="add-btn" onClick={handleAddFlashcard} disabled={!translationsList.length}>Add</button>
       </div>

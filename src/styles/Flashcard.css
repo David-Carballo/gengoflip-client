@@ -21,8 +21,8 @@
   border: 3px solid var(--green20-color);
   box-shadow: 0px 0px 2px 2px var(--dark-color);
   border-radius: 5px;
-  background-color: var(--green10-color);
-  padding: 0 30px;
+  background-color: var(--secondary-color);
+  padding: 10px 30px;
 }
 
 #profile-img {
@@ -76,9 +76,12 @@ input[name="cardName"] {
   background-color: var(--background-color);
   border: none;
   border-radius: 3px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   width: 50%;
-  
+}
+
+#flashcard-create label{
+  color: var(--background-color)
 }
 
 textarea{
@@ -103,23 +106,21 @@ select{
 }
 
 #new-translation input[type="text"] {
-  background-color: var(--light-color);
-  border: none;
-  border-radius: 3px;
-  font-size: 0.8rem;
   width: 50%;
-  padding: 1%;
-  color: var(--text-color);
-  font-family: 'Rubik';
 }
 
 #new-translation button{
   border: 2px solid var(--light-color);
-  background-color: transparent;
+  background-color: var(--background-color);
   font-weight: bold;
-  border-radius: 50%;
   width: 20px;
+  height: 20px;
+  padding: 0;
   cursor: pointer;
+}
+
+.flags{
+  width: 15px;
 }
 
 #add-btn{

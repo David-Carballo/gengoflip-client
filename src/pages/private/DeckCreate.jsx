@@ -65,6 +65,10 @@ function DeckCreate() {
     console.log(newLangs)
     setLanguages(newLangs);
   }
+  //
+  const handleDiscard = (e) => {
+    navigate(-1);
+  } 
   //Call to Post new deck in db
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -126,7 +130,7 @@ function DeckCreate() {
         <div className='flex-r justify-between w-100'>
           <h2>Create new Deck</h2>
           <div className='flex-r g20'>
-            <button>Discard</button>
+            <button onClick={handleDiscard}>Discard</button>
             <button onClick={handleCreate}>Create</button>
           </div>    
         </div>
