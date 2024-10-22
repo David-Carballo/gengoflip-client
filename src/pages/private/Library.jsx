@@ -3,6 +3,7 @@ import service from "../../services/config";
 import Deck from "../../components/Deck";
 import '../../styles/Library.css'
 
+
 function Library() {
   
   useEffect(()=>{
@@ -17,7 +18,6 @@ function Library() {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/decks/`);
       setAllDecks(response.data);
-      console.log(response.data);
     } 
     catch (error) {
       console.log(error);  

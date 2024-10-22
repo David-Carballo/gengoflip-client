@@ -6,13 +6,14 @@ import ptIcon from "../assets/pt.png"
 import itIcon from "../assets/it.png"
 import savedIcon from "../assets/bookmark.svg"
 import flashIcon from "../assets/flashcard.svg"
+import { Link } from "react-router-dom"
 
 function Deck({deck}) {
 
   const {deckName, flashcards, languages, savedCount, tags, imageUrl} = deck;
 
   return(
-    <div id="deck-card">
+    <Link to={`/decks/${deck._id}`} id="deck-card">
       <img src={imageUrl} alt="deck image"/> 
       <div className="flex-c">
         <p>{deckName}</p>
@@ -43,7 +44,7 @@ function Deck({deck}) {
         })}
       </div>
 
-    </div>
+    </Link>
   );
 }
 

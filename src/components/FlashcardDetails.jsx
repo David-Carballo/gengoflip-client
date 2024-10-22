@@ -68,7 +68,7 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
 
   const handleCloseCreate = (e) => {
     e.preventDefault();
-    setIsCreating((current)=>!current);
+    setIsCreating(-1);
   }
   const handleFileUpload = async (e) => {
     // console.log("The file to be uploaded is: ", e.target.files[0]);
@@ -107,11 +107,11 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
   return(
     <div id="flashcard-bg">
       <div id="flashcard-details" className="flex-c g10">
-        {/* <button onClick={handleCloseCreate}>X</button> */}
+        <button onClick={handleCloseCreate}>X</button>
         <div className="flex-r w-100 justify-between">
           <div id="profile-img">
-            <div id="upload-btn">
-              <input id="input-btn" type="file" name="imageUrl" onChange={handleFileUpload}/> 
+            <div id="upload-btn" hidden={!isEditMode}>
+              <input id="input-btn" type="file" name="imageUrl" onChange={handleFileUpload} /> 
             </div>
             <img src={flashcardData.imageUrl} alt="flashcard image" hidden={!flashcardData.imageUrl}/>
           </div>
@@ -132,12 +132,35 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
               <option value="Italian">Italian</option>
           </select>
         </div>
-        <div className="flex-r g10">
-          {isEditMode && <button onClick={handleEditMode}>Back</button>}
-          {isEditMode && <button onClick={handleSave}>Save</button>}
-          {!isEditMode && <button onClick={handleEditMode}>Edit</button>}
-          {<button onClick={handleDelete}>Delete</button>}
 
+
+        <div id="new-translation" className="flex-c align-start g10 w-100">
+          <label>Translations: </label>
+          <div className="flex-r justify-start w-100 g20">
+            <select onChange={handleChange} name="lang" value={flashcardData.translations[0].lang} required disabled={!isEditMode}>
+                <option value="English">English</option>
+                <option value="Spanish">Spanish</option>
+                <option value="French">French</option>
+                <option value="German">German</option>
+                <option value="Portuguese">Portuguese</option>
+                <option value="Italian">Italian</option>
+            </select>
+          </div>
+          <div className="w-100">
+            <div className="flex-c g10 align-start w-100">
+              <input onChange={handleChange} placeholder="Name" type="text" name="translatedName" value={flashcardData.translations[0].translatedName} disabled={!isEditMode}/>
+              <textarea onChange={handleChange} className="w-100" placeholder="Description" type="text" name="translatedDescription" value={flashcardData.translations[0].translatedDescription} disabled={!isEditMode}/>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div className="flex-r g10">
+          {/* {isEditMode && <button onClick={handleEditMode}>Back</button>} */}
+          {<button onClick={handleEditMode}>{isEditMode? "X": "Edit"}</button>}
+          {isEditMode && <button onClick={handleSave}>Save</button>}
+          {<button onClick={handleDelete}>Delete</button>}
         </div>
       </div>
     </div>

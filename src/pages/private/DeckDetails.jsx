@@ -30,7 +30,6 @@ function DeckDetails() {
   const getDeckDetails = async () => {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/decks/${deckId}`);
-      console.log(response.data);
       setDeckDetails(response.data)
     } 
     catch (error) {
@@ -39,7 +38,6 @@ function DeckDetails() {
   }
 
   const checkOwner = () => {
-    console.log(deckDetails)
     if(deckDetails.owner._id === loggedUserId) setIsOwner(true);
   }
 
@@ -65,21 +63,21 @@ function DeckDetails() {
                 <img src={savedIcon} alt="saved icon" />
               </div>
             </div>
-            <div className="flex-r">
-              {deckDetails.languages.map((language)=>{
-                if(language==="English") return(<img key={language} src={enIcon}/>)
-                else if(language==="Spanish") return(<img key={language} src={esIcon}/>)
-                else if(language==="French") return(<img key={language}src={frIcon}/>)
-                else if(language==="German") return(<img key={language} src={deIcon}/>)
-                else if(language==="Portuguese") return(<img key={language}src={ptIcon}/>)
-                else if(language==="Italian") return(<img key={language} src={itIcon}/>)
-              })}
-            </div>
           </div>
         </div>
+        <div className="flex-c justify-between h-100">
+          {deckDetails.languages.map((language)=>{
+            if(language==="English") return(<img key={language} src={enIcon}/>)
+            else if(language==="Spanish") return(<img key={language} src={esIcon}/>)
+            else if(language==="French") return(<img key={language}src={frIcon}/>)
+            else if(language==="German") return(<img key={language} src={deIcon}/>)
+            else if(language==="Portuguese") return(<img key={language}src={ptIcon}/>)
+            else if(language==="Italian") return(<img key={language} src={itIcon}/>)
+          })}
+        </div>
       </div>
-      <div className="flex-c align-start">
-        <p>{deckDetails.description}</p>
+      <p>{deckDetails.description}</p>
+      <div className="flex-r align-start g10">
         {deckDetails.tags.map((tag,index) => {
           return (<label key={`tag-${index}`} id="deck-tags">{tag}</label>)
           })

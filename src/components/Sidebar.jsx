@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import '../styles/Sidebar.css'
+import homeIcon from '../assets/home.svg'
+import libraryIcon from '../assets/library.svg'
+import profileIcon from '../assets/profile.svg'
+import logoutIcon from '../assets/log-out.svg'
 
 function Sidebar({setIsDarkTheme}) {
 
@@ -10,12 +14,30 @@ function Sidebar({setIsDarkTheme}) {
 
   return(
     <div id="sidebar">
-      <Link to="/dashboard">Dashboard</Link>
-      <Link to="/library">Library</Link>
-      <Link to="/profile">Profile</Link>
-      <Link to="/" onClick={handleLogout}>Logout</Link>
-      <button onClick={()=> {setIsDarkTheme((current)=>!current)}}>Theme</button>
-      <Footer/>
+      <img id="img-user" src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="profile image" />
+      <div id="sidebar-icons">
+        <Link to="/dashboard">
+          <img src={homeIcon} alt="dashboard icon" />
+          <p>Dashboard</p>
+        </Link>
+        <Link to="/library">
+          <img src={libraryIcon} alt="library icon" />
+          <p>Library</p>
+        </Link>
+        <Link to="/profile">
+          <img src={profileIcon} alt="profile icon" />
+          <p>Profile</p>
+        </Link>
+        <Link to="/" onClick={handleLogout}>
+          <img src={logoutIcon} alt="logout icon" />
+          <p>Logout</p>
+        </Link>
+      </div>
+      <div id="sidebar-footer">
+        {/* <button onClick={()=> {setIsDarkTheme((current)=>!current)}}><img src={libraryIcon} alt="home icon" /></button> */}
+        <Footer/>
+      </div>
+
     </div>
   ); 
 }

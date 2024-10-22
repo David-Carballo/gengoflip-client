@@ -79,6 +79,12 @@
 #deck-card img, #deck-details img{
   width: 15px;
 }
+#deck-card>img{
+  width: 100px;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  
+}
 
 #deck-details {
   border: 2px dashed blue;
