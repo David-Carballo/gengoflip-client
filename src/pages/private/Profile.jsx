@@ -3,7 +3,7 @@ import service from "../../services/config";
 import { AuthContext } from "../../context/auth.context";
 import '../../styles/Profile.css'
 import Deck from "../../components/Deck";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Profile() {
   const navigate = useNavigate()
@@ -73,17 +73,22 @@ function Profile() {
   if(!userData) return (<h3>Loading...</h3>)
 
   return(
-    <div id="profile" className="flex-c">
+    <div id="profile" className="flex-c g50">
+      {/* Profile info */}
       <div id="profile-card" className="flex-c g10">
-        <div className="flex-r justify-end edit-container">
+        <div className="flex-r g10 justify-between w-50">
+          <div className="w-100 flex-r justify-start h10">
+              {isEditMode && <button id="delete-btn" onClick={handleDeleteUser}>Delete account</button>}
+          </div>
           {isEditMode && <button onClick={handleDiscard}>Discard</button>}
           {isEditMode && <button onClick={handleSave}>Save</button>}
 
           {!isEditMode && <button onClick={handleEdit}>✏️</button>}
         </div>
-        <div className="flex-r justify-between">
+        <div className="flex-r g50">
           <img src={auxUserData.profileImg} alt="profile-img"/>
-          <h3 className="w-100">{auxUserData.username}</h3>
+          <h3>{auxUserData.username}</h3>
+
         </div>
         <hr/>
         <div className="flex-c align-start">
@@ -100,24 +105,37 @@ function Profile() {
               <input onChange={handleChange} type="text" name="lastName" disabled={!isEditMode} value={auxUserData.lastName} />
           </div>
         </div>
-        <div className="w-100 flex-r justify-end">
-            {isEditMode && <button onClick={handleDeleteUser}>Delete account</button>}
-        </div>
+
       </div>
       {/* User Progress */}
+      <div id="profile-progress" className="flex-r align-start g10">
+        <div className="flex-c align-start justify-between g10">
+          <label>Decks completed </label>
+          <label>Decks in Progress </label>
+          <label>Decks to Do </label>
+        </div>
+        <div className="flex-c align-start justify-between g20">
+          <input type="text" />
+          <input type="text" />
+          <input type="text" />
+        </div>
+      </div>
 
       {/* My sets */}
-      <div>
-        <p>My decks</p>
-        {userData.deckLibrary.length && userData.deckLibrary.map((deck,index) => {
-          return(
-            <div key={index} id="my-decks">
-              <img src={deck.deckId.imageUrl} alt="deck image"/> 
-              <p>{deck.deckId.deckName}</p>
-            </div>
-          )
-        })}
-      </div>
+      <Link to="/profile/library" id="profile-decks" className="w-80 flex-c g10 align-start">
+        <h4 className="flex-r">My decks</h4>
+        <div className="flex-r wrap w-100">
+          {userData.deckLibrary.length? userData.deckLibrary.map((deck,index) => {
+            return(
+              <div key={index} id="my-decks">
+                <img src={deck.deckId.imageUrl} alt="deck image"/> 
+                <p>{deck.deckId.deckName}</p>
+              </div>
+            )
+          }) : <p>Not decks available yet</p>
+          }
+        </div>
+      </Link>
     </div>
   );
 }

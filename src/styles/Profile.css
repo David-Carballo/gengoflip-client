@@ -3,19 +3,54 @@
 
 #profile{
   min-width: 100%;
-  min-height: 95svh;
-  padding: 5%;
-  border: 2px dotted red;
-  background-color: var(--background-color);
+  min-height: 100svh;
+  padding: 2% 5%;
 }
 
 #profile-card{
   min-width: 50%;
   position: relative;
   background-color: var(--secondary-color);
-  padding: 5%;
+  padding: 2% 5%;
   border-radius: 5px;
   box-shadow: 0px 0px 10px 2px var(--dark-color);
+}
+
+#profile-decks{
+  background-color: var(--light-color);
+  min-width: 50%;
+  border-radius: 5px;
+  padding: 1%;
+}
+
+#profile-decks{
+  text-decoration: none;
+}
+
+#profile-decks h4{
+  text-decoration: underline;
+}
+
+#profile-progress{
+  background-color: var(--light-color);
+  min-width: 50%;
+  border-radius: 5px;
+  padding: 1%;
+}
+
+hr{
+  width: 100%;
+  border: 1px solid var(--dark-color);;
+}
+
+#profile-card .edit-container{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  place-content: center;
 }
 
 #profile-card div{
@@ -31,12 +66,9 @@
   border-radius: 50%;
 }
 
-#profile-card .edit-container{
-  position: absolute;
-  right: 5%;
-}
-
 #my-decks{
+  width: 100px;
+  height: 100px;
   border-radius: 10px;
   background-color: var(--green20-color);
   padding: 5px;
@@ -46,14 +78,32 @@
   filter: brightness(0.5);
 }
 
+#delete-btn{
+  color: rgba(211, 100, 100, 1);
+  background-color: var(--green50-color);
+}
+
 /* ? TABLET */
 @media (min-width: 480px) {
 
-
-
   #profile-card{
-    max-width: 50%;
+    min-width: 85%;
     margin-left: 5%;
+  }
+
+  #profile-decks{
+    min-width: 85%;
+    margin-left: 5%;
+  }
+
+  #profile-progress{
+    min-width: 85%;
+    margin-left: 5%;
+  }
+
+  #profile-card .edit-container{
+    position: absolute;
+    right: 5%;
   }
 
 }
