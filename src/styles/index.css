@@ -80,14 +80,14 @@ button:hover{
   transition: 0.3s;
 }
 
-input{
+input, textarea{
   background-color: var(--green60-color);
   border-radius: 5px;
   border: none;
   line-height: 1.1rem;
   padding: 0px 10px;
 }
-input:focus{
+input:focus, textarea:focus{
   outline: 3px solid var(--green10-color);
   background-color: var(--green50-color);
 }

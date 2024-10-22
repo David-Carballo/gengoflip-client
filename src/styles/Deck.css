@@ -4,19 +4,18 @@
 
 #deck-create, #deck-edit {
   min-width: 100%;
-  min-height: 95svh;
+  min-height: 100svh;
   padding: 5%;
-  border: 2px dotted red;
-  background-color: var(--background-color);
   place-content: center;
+  justify-content: flex-start;
 }
 
 #create-form, #create-edit{
-  padding: 0 20px;
+  border-radius: 10px;
+  padding: 2% 20px;
   width: 100%;
   gap: 20px;
   justify-content: space-between;
-  background-color: var(--dark-color);
 }
 
 #edit-btn{
@@ -48,9 +47,70 @@
   font-weight: 700;
 }
 
-#languages-checkbox{
-  background-color: var(--dark-color);
+/* CHECKBOX */
+#languages-checkbox label p{
+  font-size: 0.8rem;
 }
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 1.2em;
+  width: 1.2em;
+  border-radius: 50%;
+  border: 2px solid var(--green10-color);
+  background-image: url(../assets/fr.png);
+  background-size: cover ;
+  transition: all 0.2s ease;
+}
+
+.checkmark {
+  opacity: 0.4;
+}
+
+.container input:checked ~ .checkmark {
+  background-image: url(../assets/fr.png);
+  background-size: cover ;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: none;
+}
+
+.container .checkmark:after {
+  left: 0.61em;
+  top: 0.43em;
+  width: 0.25em;
+  height: 0.5em;
+  border: solid rgb(255, 255, 255);
+  border-width: 0 0.15em 0.15em 0;
+  transform: rotate(45deg);
+}
+/* --------------- */
 
 #container-create{
   width: 20px;
@@ -61,11 +121,21 @@
 }
 
 #deck-tags{
-  padding: 0 10px;
-  background-color: var(--green40-color);
-  color: white;
+  position: relative;
+  background-color: var(--utils30-color);
+  color: black;
   font-size: 0.6rem;
+  font-weight: bolder;
+  padding-left: 5px;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#deck-tags button{
+  background-color: transparent;
+  font-size: 0.5rem;
 }
 
 #deck-card{
@@ -83,9 +153,12 @@
   width: 100px;
   aspect-ratio: 1;
   border-radius: 5px;
-  
 }
 
+input[name="name"]{
+  line-height: 3rem;
+  font-size: 1.2rem;
+}
 
 #flashcard-item {
   position: relative;
@@ -126,12 +199,13 @@
 /* ? TABLET */
 @media (min-width: 480px) {
 
-  #deck-create {
-    min-height: 100svh;
+  #deck-create{
+    padding: 5% 10%;
+    min-width: 50%;
   }
 
+
   #create-form{
-    border: 2px dotted blue;
     padding: 0 20px;
 
     max-width: 80%;

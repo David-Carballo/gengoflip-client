@@ -93,9 +93,7 @@ function DeckEdit() {
     const newTags = [...deckDetails.tags];
     //Si el lenguaje estaba incluido en el estado eliminarlo
     let index = newTags.indexOf(e.target.name)
-    console.log(newTags);
     if(index > -1) newTags.splice(index, 1)
-    console.log(index, newTags)
     const deckClone = structuredClone(deckDetails);
     deckClone.tags = newTags;
     setDeckDetails(deckClone);
@@ -207,9 +205,9 @@ function DeckEdit() {
         <div className="flex-r">
           {deckDetails.tags.map((tag,index) => {
             return (
-              <div key={`tag-${index}`}>
+              <div key={`tag-${index}`} id="deck-tags">
                 <button onClick={handleDeleteTag} name={tag}>❌</button>
-                <label id="deck-tags">{tag}</label>
+                <label id="tag">{tag}</label>
               </div>
             )}
           )}

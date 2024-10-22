@@ -3,6 +3,12 @@ import '../../styles/Deck.css'
 import service from '../../services/config';
 import { useNavigate } from 'react-router-dom';
 import FlashcardCreate from '../../components/FlashcardCreate';
+import enIcon from "../../assets/en.png"
+import esIcon from "../../assets/es.png"
+import frIcon from "../../assets/fr.png"
+import deIcon from "../../assets/de.png"
+import ptIcon from "../../assets/pt.png"
+import itIcon from "../../assets/it.png"
 
 function DeckCreate() {
 
@@ -37,14 +43,26 @@ function DeckCreate() {
     setTag("");
     setTagsList(newTags);
   }
+  //Handle delete tag
+  const handleDeleteTag = (e) => {
+    e.preventDefault();
+    const newTags = [...tagsList];
+    //Si el lenguaje estaba incluido en el estado eliminarlo
+    let index = newTags.indexOf(e.target.name)
+    if(index > -1) newTags.splice(index, 1)
+    setTag("");
+    setTagsList(newTags);
+  }
+
   //Handle value of languages checkboxes
   const handleChangeLang = (e) => {
+    
     const newLangs = [...languages];
     //Si el lenguaje estaba incluido en el estado eliminarlo
     let index = newLangs.indexOf(e.target.value)
     if(index > -1) newLangs.splice(index, 1)
     else newLangs.push(e.target.value);
-
+    console.log(newLangs)
     setLanguages(newLangs);
   }
   //Call to Post new deck in db
@@ -104,11 +122,16 @@ function DeckCreate() {
 
 
   return(
-    <div id="deck-create" className='flex-r'>
-      <div id="create-form" className='flex-c g20'>
-        <h2>Create new Deck</h2>
+    <div id="deck-create" className='flex-c align-start g20'>
+        <div className='flex-r justify-between w-100'>
+          <h2>Create new Deck</h2>
+          <div className='flex-r g20'>
+            <button>Discard</button>
+            <button onClick={handleCreate}>Create</button>
+          </div>    
+        </div>
         {/* Image + title */}
-        <div className="flex-r w-100 justify-between">
+        <div className="flex-r w-100 justify-start g50">
           <div id="profile-img">
             <div id="upload-btn">
               <input id="input-btn" type="file" name="imageUrl" onChange={handleFileUpload}/> 
@@ -118,52 +141,62 @@ function DeckCreate() {
           <input onChange={handleName} placeholder="Title" type="text" name="name" value={deckName}/>
         </div>
 
-        {/* List of generated tags */}
+        {/* Tags */}
         <div className='flex-r g10 w-100'>
           {tagsList.map((tag,index) => {
-              return (<label key={`tag-${index}`} id="deck-tags">{tag}</label>)
+              return (              
+              <div key={`tag-${index}`} id="deck-tags">
+                <label id="tag">{tag}</label>
+                <button onClick={handleDeleteTag} name={tag}>❌</button>
+              </div>)
             }
           )}
+          <div className='flex-r w-100 justify-start'>
+            <div className='flex-r g10'>
+              <input onChange={handleTag} placeholder="Add new tags..." type="text" name="tags" value={tag}/>
+              <button onClick={handleTagList}>+</button>
+            </div>
+          </div>
         </div>
         {/* Description */}
         <textarea onChange={handleDesc} placeholder="Write here the deck's description..." className="w-100" type="text" name="description" rows="3" value={description}/>
-        {/* Tags */}
-        <div className='flex-r w-100 justify-start'>
-          <div className='flex-r g10'>
-            <input onChange={handleTag} placeholder="Add new tags..." type="text" name="tags" value={tag}/>
-            <button onClick={handleTagList}>+</button>
-          </div>
-        </div>
+
         
         {/* Languages select */}
         {/*//TODO Update languages with Flashcards value / Permitir solo estos languages en flashcards */}
-        <div className='flex-c align-start'>
+        <div className='flex-c align-start g10'>
           <p>What languages ​​does your deck support?</p>
           <div id="languages-checkbox" className='flex-r wrap w-100 g10'>
-            <div name="English">
-              <input onChange={handleChangeLang} type="checkbox" name="en" value="English"/>
-              <label>English</label>
-            </div>
-            <div>
+            <label className="container flex-r g10">
+              <input onChange={handleChangeLang} type="checkbox" name="en" value="English" />
+              <div className="checkmark" style={{backgroundImage: `url(${enIcon})`}}></div>
+              <p>English</p>
+            </label>
+            <label className="container flex-r g10">
               <input onChange={handleChangeLang} type="checkbox" name="es" value="Spanish" />
-              <label>Spanish</label>
-            </div>
-            <div>
+              <div className="checkmark" style={{backgroundImage: `url(${esIcon})`}}></div>
+              <p>Spanish</p>
+            </label>
+            <label className="container flex-r g10">
               <input onChange={handleChangeLang} type="checkbox" name="fr" value="French" />
-              <label>French</label>
-            </div>
-            <div>
+              <div className="checkmark" style={{backgroundImage: `url(${frIcon})`}}></div>
+              <p>French</p>
+            </label>
+            <label className="container flex-r g10">
               <input onChange={handleChangeLang} type="checkbox" name="de" value="German" />
-              <label>German</label>
-            </div>
-            <div>
+              <div className="checkmark" style={{backgroundImage: `url(${deIcon})`}}></div>
+              <p>German</p>
+            </label>
+            <label className="container flex-r g10">
               <input onChange={handleChangeLang} type="checkbox" name="pt" value="Portuguese" />
-              <label>Portuguese</label>
-            </div>
-            <div>
+              <div className="checkmark" style={{backgroundImage: `url(${ptIcon})`}}></div>
+              <p>Portuguese</p>
+            </label>
+            <label className="container flex-r g10">
               <input onChange={handleChangeLang} type="checkbox" name="it" value="Italian" />
-              <label>Italian</label>
-            </div>
+              <div className="checkmark" style={{backgroundImage: `url(${itIcon})`}}></div>
+              <p>Italian</p>
+            </label>
           </div>
         </div>
         
@@ -176,21 +209,13 @@ function DeckCreate() {
             </div>
           )
           })}
-          <div id="container-create" onClick={()=>{setIsCreating(!isCreating)}}>
-            <p>+</p>
+          <div onClick={()=>{setIsCreating(!isCreating)}} id="flashcard-item-add">
+            <h2>+</h2>
           </div>
         </div>
         {isCreating && <FlashcardCreate setIsCreating={setIsCreating} newFlashcard={newFlashcard} setNewFlashcard={setNewFlashcard} setFlashcardsList={setFlashcardsList}/>}
         
-        
-        <div className='flex-r g20'>
-          <button>Discard</button>
-          <button onClick={handleCreate}>Create</button>
-        </div>
 
-      </div>
-
-    
     </div>
   );
 }
