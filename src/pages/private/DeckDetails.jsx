@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import '../../styles/DeckDetails.css'
 import service from "../../services/config";
 import enIcon from "../../assets/en.png"
 import esIcon from "../../assets/es.png"
@@ -46,9 +47,10 @@ function DeckDetails() {
   return(
     <div id="deck-details" className="flex-c g20 justify-start align-start">
       {isOwner && <Link to={`/decks/${deckId}/edit`}>Edit</Link>}
-      
-      <div className="flex-r h-100 g20">
+      {/* GENERAL INFO */}
+      <div id="deck-info" className="flex-r h-100 g20 w-100">
         <img src={deckDetails.imageUrl} className="deck-img" alt="deck image"/>
+        {/* title and info */}
         <div className="flex-c justify-between align-start h-100 w-100">
           <h4>{deckDetails.deckName}</h4>
           <br />
@@ -65,7 +67,8 @@ function DeckDetails() {
             </div>
           </div>
         </div>
-        <div className="flex-c justify-between h-100">
+        {/* languages */}
+        <div className="flex-c  h-100 g10">
           {deckDetails.languages.map((language)=>{
             if(language==="English") return(<img key={language} src={enIcon}/>)
             else if(language==="Spanish") return(<img key={language} src={esIcon}/>)
@@ -76,13 +79,16 @@ function DeckDetails() {
           })}
         </div>
       </div>
+      {/* DESCRIPTION */}
       <p>{deckDetails.description}</p>
+      {/* TAGS */}
       <div className="flex-r align-start g10">
         {deckDetails.tags.map((tag,index) => {
           return (<label key={`tag-${index}`} id="deck-tags">{tag}</label>)
           })
         }
       </div>
+      {/* FLASHCARDS */}
       {/* //TODO isEditMode & add [+] */}
       <div className="flex-r wrap g20">
         {deckDetails.flashcards.map((flashcard,index)=>{

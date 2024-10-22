@@ -1,13 +1,11 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import '../../styles/Deck.css'
 import service from '../../services/config';
-import { AuthContext } from '../../context/auth.context';
 import { useNavigate } from 'react-router-dom';
 import FlashcardCreate from '../../components/FlashcardCreate';
 
 function DeckCreate() {
 
-  const {loggedUserId} = useContext(AuthContext);
   const navigate = useNavigate();
 
   //States
@@ -17,14 +15,13 @@ function DeckCreate() {
   const [tag, setTag] = useState("");
   const [tagsList, setTagsList] = useState([]);
   const [languages, setLanguages] = useState([]);
-  //! DONT PASS OWNER IN FRONTEND
+
   const [newFlashcard, setNewFlashcard] = useState({
     cardName: "",
     description: "",
     originalLang: "",
     translations: [],
-    imageUrl: "",
-    owner: loggedUserId 
+    imageUrl: ""
   })
   const [flashcardsList, setFlashcardsList] = useState([]);
   const [isCreating, setIsCreating] = useState(false)

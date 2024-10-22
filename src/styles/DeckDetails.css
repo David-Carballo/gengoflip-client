@@ -1,0 +1,36 @@
+/* ? MOBILE */
+
+#deck-details{
+  min-width: 100%;
+  min-height: 95svh;
+  padding: 10%;
+  border: 2px dotted red;
+  background-color: var(--background-color);
+}
+
+#deck-details .deck-img{
+  width: clamp(50px, 25%, 200px);
+}
+
+#deck-info{
+  background-color: var(--green40-color);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+
+/* ? TABLET */
+@media (min-width: 480px) {
+
+  #deck-details{
+    padding: 5% 10%;
+  }
+
+}
+
+
+/* ? PC */
+@media (min-width: 1024px) {
+
+
+}

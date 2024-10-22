@@ -9,6 +9,7 @@ import deIcon from "../../assets/de.png"
 import ptIcon from "../../assets/pt.png"
 import itIcon from "../../assets/it.png"
 import editBtn from "../../assets/dot-options.svg"
+import FlashcardCreate from "../../components/FlashcardCreate";
 
 function DeckEdit() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function DeckEdit() {
   useEffect(()=>{
     getDeckDetails();
   },[])
-
+  
   //Get details of this deck
   const getDeckDetails = async () => {
     try {
@@ -25,6 +26,7 @@ function DeckEdit() {
       setDeckDetails(response.data);
       console.log(response.data);
       setTagsList(response.data.tags);
+      setFlashcardsList(response.data.flashcards)
     } 
     catch (error) {
       console.log(error);
@@ -37,7 +39,21 @@ function DeckEdit() {
   const [tagsList, setTagsList] = useState([]);
   const [dropMenu, setDropMenu] = useState(-1);
   const [isCreating, setIsCreating] = useState(-1)
+  const [isAdding, setIsAdding] = useState(false)
   
+  const [newFlashcard, setNewFlashcard] = useState({
+    cardName: "",
+    description: "",
+    originalLang: "",
+    translations: [],
+    imageUrl: ""
+  })
+  const [flashcardsList, setFlashcardsList] = useState([]);
+  
+  useEffect(() => {
+    console.log("count2 changed!");
+  }, [deckDetails]);
+
   //Handle states changes
   const handleChange = (e) => {
     const deckClone = structuredClone(deckDetails);
@@ -56,6 +72,7 @@ function DeckEdit() {
     const deckClone = structuredClone(deckDetails);
     deckClone.tags = newTags;
     setTag("");
+    setTagsList(newTags)
     setDeckDetails(deckClone);
     console.log(deckClone);
   }
@@ -82,6 +99,7 @@ function DeckEdit() {
     const deckClone = structuredClone(deckDetails);
     deckClone.tags = newTags;
     setDeckDetails(deckClone);
+    setTagsList(newTags);
   }
   //Handle drop menu to edit and delete flashcard
   const handleDropMenu = (index) => {
@@ -96,18 +114,22 @@ function DeckEdit() {
     deckClone.flashcards = flashIds;
     console.log(deckClone)
     setDeckDetails(deckClone);
+    setFlashcardsList(flashIds);
   }
-  //Handle open flashcard edit
-  const handleOpenEditMode = () => {
-
+  //Handle add flashcard to desk
+  const handleAddNewFlashcard = (e) => {
+    e.preventDefault();
+    setIsAdding(!isAdding);
   }
 
   //Call to Update changes of this deck
   const handleSave = async (e) => {
     e.preventDefault();
-    
+    const updatedDeck = structuredClone(deckDetails);
+    updatedDeck.tags = tagsList;
+    updatedDeck.flashcards = flashcardsList.map((e)=>e._id);
     try {
-      const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/decks/${params.deckId}`, deckDetails);
+      const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/decks/${params.deckId}`, updatedDeck);
       navigate(`/decks/${params.deckId}`);
     } 
     catch (error) {
@@ -127,6 +149,7 @@ function DeckEdit() {
     }
   }
 
+  //Upload image
   const handleFileUpload = async (e) => {
     // console.log("The file to be uploaded is: ", e.target.files[0]);
 
@@ -181,14 +204,16 @@ function DeckEdit() {
           <button onClick={handleTagList}>+</button>
         </div>
         {/* List of generated tags */}
-        {deckDetails.tags.map((tag,index) => {
-          return (
-            <div key={`tag-${index}`}>
-              <button onClick={handleDeleteTag} name={tag}>❌</button>
-              <label id="deck-tags">{tag}</label>
-            </div>
+        <div className="flex-r">
+          {deckDetails.tags.map((tag,index) => {
+            return (
+              <div key={`tag-${index}`}>
+                <button onClick={handleDeleteTag} name={tag}>❌</button>
+                <label id="deck-tags">{tag}</label>
+              </div>
+            )}
           )}
-        )}
+        </div>
 
         <div id="languages-checkbox" >
           {/* <label><img src={enIcon} alt="english icon" /></label> */}
@@ -207,9 +232,13 @@ function DeckEdit() {
         </div>
 
         {/* //TODO Flashcards Creation */}
+        {isAdding && <FlashcardCreate setIsCreating={setIsAdding} newFlashcard={newFlashcard} setNewFlashcard={setNewFlashcard} setFlashcardsList={setFlashcardsList}/>}
         {/* {deckDetails.flashcards.map((fc,index)=><FlashcardDetails key={`fc-${index}`} flashId={fc._id} setDeckDetails={setDeckDetails}/>)} */}
         <div className="flex-r wrap g20 w-100">
-          {deckDetails.flashcards.map((fc,index)=>{
+          <div onClick={handleAddNewFlashcard} id="flashcard-item-add">
+            <h2>+</h2>
+          </div>
+          {flashcardsList.map((fc,index)=>{
             return(
               <div id="flashcard-item" key={`fc-${index}`} style={{position: "relative"}}>
                 {<div id="drop-menu" hidden={!(dropMenu === index)} >

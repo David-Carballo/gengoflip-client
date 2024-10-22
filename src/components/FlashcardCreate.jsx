@@ -24,6 +24,7 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
     setTranslationsList([...translationsList, translation]);
     // setTranslation({lang:"", translatedName:"", translatedDesc:""});
   }
+  
   const handleAddFlashcard = async (e) => {
     e.preventDefault();
     try {

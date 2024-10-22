@@ -3,9 +3,13 @@ import service from "../../services/config";
 import { AuthContext } from "../../context/auth.context";
 import '../../styles/Profile.css'
 import Deck from "../../components/Deck";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
+  const navigate = useNavigate()
+  const { authenticateUser } = useContext(AuthContext)
 
+  //Get user details
   useEffect(()=>{
     getUserDetails();
   },[])
@@ -14,33 +18,52 @@ function Profile() {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/users/profile`)
       setUserData(response.data);
+      setAuxUserData(response.data);
       console.log(response.data)
     } 
     catch (error) {
       console.log(error)
     }
   }
-  // TODO Discard => Volver a dejar la data tal como estaba...solo actualizar userData cuando save changes
+
+  //STATES
   const [isEditMode, setIsEditMode] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [auxUserData, setAuxUserData] = useState(null)
+
+  //Handle input changes
   
   const handleChange = (e) => {
-    const cloneUserData = structuredClone(userData);
+    const cloneUserData = structuredClone(auxUserData);
     cloneUserData[e.target.name] = e.target.value;
-    setUserData(cloneUserData);
+    setAuxUserData(cloneUserData);
+  }
+  const handleDiscard = (e) => {  
+    e.preventDefault();
+    setAuxUserData(userData);
+    setIsEditMode(false);
   }
   
+  //Handle CRUD User
+  const handleDeleteUser = async (e) => {
+    e.preventDefault();
+    const response = await service.delete(`${import.meta.env.VITE_SERVER_URL}/api/users/delete`)
+    console.log(response);
+    localStorage.removeItem("authToken")
+    await authenticateUser();
+    navigate("/")
+  }
   const handleEdit = (e) => {
     e.preventDefault();
     setIsEditMode(!isEditMode);
   }
-
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/users/profile`, userData, {new: true})
+      const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/users/profile`, auxUserData, {new: true})
       console.log(response)
       setIsEditMode(false);
+      setUserData(auxUserData);
     } 
     catch (error) {
       console.log(error);  
@@ -53,33 +76,33 @@ function Profile() {
     <div id="profile" className="flex-c">
       <div id="profile-card" className="flex-c g10">
         <div className="flex-r justify-end edit-container">
-          {isEditMode && <button onClick={handleEdit}>Discard</button>}
+          {isEditMode && <button onClick={handleDiscard}>Discard</button>}
           {isEditMode && <button onClick={handleSave}>Save</button>}
 
           {!isEditMode && <button onClick={handleEdit}>✏️</button>}
         </div>
         <div className="flex-r justify-between">
-          <img src={userData.profileImg} alt="profile-img"/>
-          {/* <label>User:</label> */}
-          <h3 className="w-100">{userData.username}</h3>
+          <img src={auxUserData.profileImg} alt="profile-img"/>
+          <h3 className="w-100">{auxUserData.username}</h3>
         </div>
         <hr/>
         <div className="flex-c align-start">
           <div className="w-100 flex-r justify-between">
             <label>Email:</label>
-            <input type="text" readOnly={!isEditMode} value={userData.email} />
+            <input type="text" value={auxUserData.email} disabled/>
           </div>
           <div className="w-100 flex-r justify-between">
             <label>First Name:</label>
-            <input onChange={handleChange} type="text" name="firstName" readOnly={!isEditMode} value={userData.firstName} />
+            <input onChange={handleChange} type="text" name="firstName" disabled={!isEditMode} value={auxUserData.firstName} />
           </div>
           <div className="w-100 flex-r justify-between">
               <label>Last Name:</label>
-              <input onChange={handleChange} type="text" name="lastName" readOnly={!isEditMode} value={userData.lastName} />
+              <input onChange={handleChange} type="text" name="lastName" disabled={!isEditMode} value={auxUserData.lastName} />
           </div>
         </div>
-
-
+        <div className="w-100 flex-r justify-end">
+            {isEditMode && <button onClick={handleDeleteUser}>Delete account</button>}
+        </div>
       </div>
       {/* User Progress */}
 

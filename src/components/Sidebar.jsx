@@ -1,15 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import '../styles/Sidebar.css'
 import homeIcon from '../assets/home.svg'
 import libraryIcon from '../assets/library.svg'
 import profileIcon from '../assets/profile.svg'
 import logoutIcon from '../assets/log-out.svg'
+import { useContext } from "react";
+import { AuthContext } from "../context/auth.context";
 
 function Sidebar({setIsDarkTheme}) {
-
-  const handleLogout = () => {
-    console.log("Log out")
+  const { authenticateUser } = useContext(AuthContext)
+  const navigate = useNavigate();
+  
+  const handleLogout = async () => {
+    localStorage.removeItem("authToken");
+    await authenticateUser();
+    navigate("/login")
   }
 
   return(
