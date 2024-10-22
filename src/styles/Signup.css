@@ -2,10 +2,8 @@
 
 #signup{
   min-width: 100%;
-  min-height: 90svh;
-  padding: 5%;
-  border: 2px dotted red;
-  background-color: var(--background-color);
+  min-height: 95svh;
+  padding: 5% 10%;
   place-content: center;
 }
 
@@ -16,9 +14,9 @@
 #signup-card{
   background-color: var(--secondary-color);
   border-radius: 10px;
-  box-shadow: 0px 0px 10px 2px var(--dark-color);
+  box-shadow: 0px 0px 10px 2px var(--light-color);
   overflow: hidden;
-  border: 5px solid rgba(255,255,255,0.5);
+  border: 5px solid var(--light-color)
 }
 
 

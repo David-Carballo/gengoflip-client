@@ -52,9 +52,10 @@ function Signup() {
     <div id="signup">
       <div id="signup-card"  className="flex-r">
         <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="" className="w-50"/>
-        <div className="w-100 flex-c ">
-          <h3>Create an account</h3>
-        
+        <div className="w-100 flex-c g10 p10">
+          <h2>Create an account</h2>
+          <br/>
+          <br/>
           <form onSubmit={handleSignup} className="flex-c align-center g10 w-50">
             <label className="w-100 start">Email</label>
             <input className="w-100 start" type="email" name="email" value={email} onChange={handleEmailChange}/>

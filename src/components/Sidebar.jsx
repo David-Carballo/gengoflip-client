@@ -20,8 +20,11 @@ function Sidebar({setIsDarkTheme}) {
 
   return(
     <div id="sidebar">
-      <img id="img-user" src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="profile image" />
       <div id="sidebar-icons">
+        <Link to="/profile">
+          <img src={profileIcon} alt="profile icon" />
+          <p>Profile</p>
+        </Link>
         <Link to="/dashboard">
           <img src={homeIcon} alt="dashboard icon" />
           <p>Dashboard</p>
@@ -30,10 +33,6 @@ function Sidebar({setIsDarkTheme}) {
           <img src={libraryIcon} alt="library icon" />
           <p>Library</p>
         </Link>
-        <Link to="/profile">
-          <img src={profileIcon} alt="profile icon" />
-          <p>Profile</p>
-        </Link>
         <Link to="/" onClick={handleLogout}>
           <img src={logoutIcon} alt="logout icon" />
           <p>Logout</p>
@@ -41,7 +40,7 @@ function Sidebar({setIsDarkTheme}) {
       </div>
       <div id="sidebar-footer">
         {/* <button onClick={()=> {setIsDarkTheme((current)=>!current)}}><img src={libraryIcon} alt="home icon" /></button> */}
-        <Footer/>
+        {/* <Footer/> */}
       </div>
 
     </div>

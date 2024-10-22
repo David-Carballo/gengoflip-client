@@ -25,12 +25,11 @@ import Sidebar from './components/Sidebar'
 
 function App() {
   const {isLoggedIn} = useContext(AuthContext)
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   return (
-    <div id="app" className={isDarkTheme? "dark-theme":"light-theme"}>  
-      {!isLoggedIn && <Navbar setIsDarkTheme={setIsDarkTheme}/>}
-      {isLoggedIn && <Sidebar setIsDarkTheme={setIsDarkTheme}/>}
+    <div id="app" className={"theme"}>  
+      {!isLoggedIn && <Navbar/>}
+      {isLoggedIn && <Sidebar/>}
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>
@@ -44,7 +43,7 @@ function App() {
         <Route path="/decks/create" element={<Private><DeckCreate/></Private>}/>
         <Route path="/decks/:deckId/edit" element={<Private><DeckEdit/></Private>}/>
       </Routes>
-      {!isLoggedIn && <Footer/>}
+      {/* {!isLoggedIn && <Footer/>} */}
       
 
     </div>

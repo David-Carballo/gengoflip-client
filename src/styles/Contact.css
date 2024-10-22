@@ -2,13 +2,9 @@
 
 #contact{
   min-width: 100%;
-  min-height: 90svh;
+  min-height: 95svh;
   padding: 5%;
-  border: 2px dotted red;
-  background-color: var(--background-color);
 }
-
-
 
 /* ? TABLET */
 @media (min-width: 480px) {

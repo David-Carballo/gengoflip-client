@@ -3,11 +3,9 @@
 /* ? MOBILE */
 
 #home{
-  min-width: 90%;
+  min-width: 100%;
   min-height: 95svh;
   padding: 5%;
-  border: 2px dotted red;
-  background-color: var(--background-color);
 }
 
 #home *{
@@ -15,13 +13,42 @@
 }
 
 #home img{
-  position: absolute;
+  width: 200px;
   z-index: 0;
 }
+
+#home a{
+  margin: 10px 0;
+  font-family: 'Rubik';
+  padding: 5px 15px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--green30-color);
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.3s;
+
+}
+#home a:hover{
+  background-color: var(--green40-color);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
 
 /* ? TABLET */
 @media (min-width: 480px) {
 
+  #home{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  #home img{
+    width: 400px;
+    z-index: 0;
+  }
 
 }
 
@@ -29,5 +56,8 @@
 /* ? PC */
 @media (min-width: 1024px) {
 
-
+  #home img{
+    width: 500px;
+    z-index: 0;
+  }
 }

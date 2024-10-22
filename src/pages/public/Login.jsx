@@ -53,8 +53,10 @@ function Login() {
     <div id="login">
       <div id="login-card" className="flex-r">
         <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="" className="w-50"/>
-        <div className="w-100 flex-c ">
-          <h3>Welcome back</h3>
+        <div className="w-100 flex-c g10 p10">
+          <h2>Welcome back</h2>
+          <br/>
+          <br/>
           <p>Enter your email and password to continue.</p>
           <form onSubmit={handleLogin} className="flex-c align-center g10 w-50">
             <label className="w-100 start">Email</label>
