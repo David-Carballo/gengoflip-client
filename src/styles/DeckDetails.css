@@ -2,22 +2,37 @@
 
 #deck-details{
   min-width: 100%;
-  min-height: 95svh;
+  min-height: 100svh;
   padding: 10%;
-  border: 2px dotted red;
-  background-color: var(--background-color);
 }
 
 #deck-details .deck-img{
+  border-radius: 10px;
   width: clamp(50px, 25%, 200px);
 }
 
 #deck-info{
-  background-color: var(--green40-color);
+  background-color: var(--light-color);
   border-radius: 10px;
   padding: 10px;
 }
 
+#deck-tags{
+  padding: 0 5px;
+}
+
+#deck-info a img{
+  width: 20px;
+  text-decoration: none;
+}
+#deck-info a img:hover{
+  filter: invert(40%) sepia(31%) saturate(799%) hue-rotate(65deg) brightness(96%) contrast(90%);
+}
+
+#deck-info p{
+  font-size: 0.8rem;
+  text-align: left;
+}
 
 /* ? TABLET */
 @media (min-width: 480px) {

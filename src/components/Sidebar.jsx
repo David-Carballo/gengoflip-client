@@ -23,19 +23,19 @@ function Sidebar({setIsDarkTheme}) {
       <div id="sidebar-icons">
         <Link to="/profile">
           <img src={profileIcon} alt="profile icon" />
-          <p>Profile</p>
+          <p className="mobile">Profile</p>
         </Link>
         <Link to="/dashboard">
           <img src={homeIcon} alt="dashboard icon" />
-          <p>Dashboard</p>
+          <p className="mobile">Dashboard</p>
         </Link>
         <Link to="/library">
           <img src={libraryIcon} alt="library icon" />
-          <p>Library</p>
+          <p className="mobile">Library</p>
         </Link>
         <Link to="/" onClick={handleLogout}>
           <img src={logoutIcon} alt="logout icon" />
-          <p>Logout</p>
+          <p className="mobile">Logout</p>
         </Link>
       </div>
       <div id="sidebar-footer">
