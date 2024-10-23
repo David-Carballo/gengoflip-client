@@ -6,14 +6,108 @@
   min-width: 100%;
   min-height: 95svh;
   padding: 5%;
-  border: 2px dotted red;
-  background-color: var(--background-color);
+}
+
+#dashboard a:hover {
+  color: var(--green10-color);
 }
 
 #dashboard-panel{
-  background-color: var(--green10-color);
-  height: 200px;
+  border-radius: 10px;
+  /* background-image: url(../assets/panel1.png);
+  background-position: center;
+  background-size: cover; */
+  height: 150px;
   width: clamp(50%, 80%,90%);
+  overflow: hidden;
+  border: 2px solid var(--green10-color);
+  /* filter: brightness(0.8); */
+  transition: 0.2s;
+  position: relative;
+}
+
+#dashboard-panel::before{
+  content: "";
+  position: absolute;
+  background-image: url(../assets/panel1.png);
+  background-position: center;
+  background-size: cover;  
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  filter: brightness(0.7);
+  transition: 0.1s;
+}
+
+#dashboard-panel:hover::before{
+  filter: brightness(0.8);
+  transition: 0.1s;
+}
+
+#dashboard-panel:hover{
+  color: white !important;
+  border: 5px solid var(--green10-color);
+  transition: 0.1s;
+}
+
+#dashboard-panel img{
+  width: 100%;
+}
+
+#dashboard-panel h2{
+  font-family: 'Rubik';
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dashboard-panel h2:hover{
+  color: white;
+  font-size: 1.6rem;
+  transition: 0.2s;
+}
+
+#dashboard-most {
+  border-radius: 10px;
+  height: 100px;
+  background-color: var(--light-color);
+  padding: 5px;
+}
+
+#dashboard-most img{
+  filter: brightness(0.8);
+  transition: 0.1s;
+}
+
+#dashboard-most img:hover{
+  filter: brightness(1);
+  transition: 0.1s;
+}
+
+#dashboard-most a:hover{
+  color: white;
+  filter: brightness(1);
+}
+
+#dashboard-most .most-container{
+  position: relative;
+  aspect-ratio: 1;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+#dashboard-most .most-container h5{
+  position: absolute;
+  display: flex;
+  top:40%;
+  justify-content: center;
+  align-items: center;
 }
 
 #dashboard-profile img{
@@ -29,7 +123,9 @@
 /* ? TABLET */
 @media (min-width: 480px) {
 
-
+  #dashboard-panel{
+    height: 150px;
+  } 
 }
 
 

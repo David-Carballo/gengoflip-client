@@ -10,13 +10,15 @@ import savedIcon from "../../assets/bookmark.svg"
 import savedFillIcon from "../../assets/bookmark-fill.svg"
 import ownerIcon from "../../assets/person.svg"
 import flashIcon from "../../assets/flashcard.svg"
-import { Link } from "react-router-dom"
+import { Link, useParams, useSearchParams } from "react-router-dom"
 import '../../styles/Library.css'
 import { AuthContext } from "../../context/auth.context";
 
 function Library() {
 
   const {loggedUserId} = useContext(AuthContext);
+  const [searchParams] = useSearchParams()
+  const search = searchParams.get('search');
   
   useEffect(()=>{
     getDecks();
@@ -26,7 +28,7 @@ function Library() {
   //States
   const [allDecks, setAllDecks] = useState(null);
   const [myDecks, setMyDecks] = useState(null);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(search? search: "");
 
   //API Calls
   const getDecks = async() => {
@@ -42,7 +44,6 @@ function Library() {
   const getMyDecks = async() => {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/`);
-      console.log("Mydecks",response.data.deckLibrary.map(e => e.deckId._id));
       setMyDecks(response.data.deckLibrary.map(e => e.deckId._id))
     } 
     catch (error) {
