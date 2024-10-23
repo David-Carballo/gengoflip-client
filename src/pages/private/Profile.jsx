@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import service from "../../services/config";
 import { AuthContext } from "../../context/auth.context";
 import '../../styles/Profile.css'
-import Deck from "../../components/Deck";
 import { Link, useNavigate } from "react-router-dom";
 
 function Profile() {
@@ -124,7 +123,7 @@ function Profile() {
       {/* My sets */}
       <Link to="/profile/library" id="profile-decks" className="w-80 flex-c g10 align-start">
         <h4 className="flex-r">My decks</h4>
-        <div className="flex-r wrap w-100">
+        <div className="flex-r wrap w-100 g20">
           {userData.deckLibrary.length? userData.deckLibrary.map((deck,index) => {
             return(
               <div key={index} id="my-decks">

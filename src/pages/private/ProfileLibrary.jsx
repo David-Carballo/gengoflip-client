@@ -35,7 +35,7 @@ function ProfileLibrary() {
         <Link to="/decks/create"><button>+  Add deck</button></Link>
       </div>
 
-      <div className="flex-r wrap w-100">
+      <div className="flex-r wrap w-100 g20">
         {allDecks.length? 
           allDecks.map((deck,index)=>{
             return(

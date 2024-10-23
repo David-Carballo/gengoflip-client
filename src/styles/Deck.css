@@ -140,21 +140,42 @@
 }
 
 #deck-card{
+  width: 40%;
   border-radius: 10px;
   padding: 10px;
   background-color: var(--green30-color);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  text-decoration: none;
 }
 #deck-card img, #deck-details img{
   width: 15px;
 }
 #deck-card>img{
-  width: 100px;
+  width: 40%;
   aspect-ratio: 1;
   border-radius: 5px;
 }
+
+#deck-card {
+  background-color: var(--green20-color);
+  width: 40%;
+  height: 100px;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+#deck-card p{
+  font-size: 0.6rem;
+}
+
+#deck-card > img {
+  width: 40%;
+  border-radius: 5px;
+}
+
 
 input[name="name"]{
   line-height: 3rem;

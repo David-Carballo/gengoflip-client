@@ -4,8 +4,32 @@
   min-width: 100%;
   min-height: 95svh;
   padding: 5%;
-  border: 2px dotted red;
-  background-color: var(--background-color);
+}
+
+#library #my-decks-card {
+  position: relative;
+
+}
+a{
+  text-decoration: none;
+}
+
+#library #my-decks-card button{
+  position: absolute;
+  top:0;
+  left: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+#library #my-decks-card img:not(.deck-img){
+  width: 20px;
+  min-width: 5px;
+
+}
+
+#languages-list img{
+  width: 15px !important;
 }
 
 
@@ -13,12 +37,9 @@
 @media (min-width: 480px) {
 
   #library{
-    min-width: 100%;
-    min-height: 95svh;
-    padding: 5%;
-    border: 2px dotted red;
-    background-color: var(--background-color);
+    min-height: 100svh;
   }
+
 }
 
 
