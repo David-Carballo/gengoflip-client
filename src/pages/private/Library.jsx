@@ -26,6 +26,7 @@ function Library() {
   //States
   const [allDecks, setAllDecks] = useState(null);
   const [myDecks, setMyDecks] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
 
   //API Calls
   const getDecks = async() => {
@@ -49,14 +50,20 @@ function Library() {
     }
   }
 
-  const handleSaved = async (e,id) => {
+  const handleSaved = async (e, index, id, savedCount) => {
     e.preventDefault();
     try {
+      let newCount = savedCount+1;
+      const clone = structuredClone(allDecks);
+      clone[index].savedCount = newCount;
+      setAllDecks(clone);
+      await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/decks/${id}`, {savedCount: newCount}, {new:true})
+
       console.log("Guardado");
       const response = await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/add-deck`, {deckId: id}, {new:true})
       console.log(response.data);
-
       
+
       setMyDecks(response.data.deckLibrary.map(e => e.deckId));
 
     } 
@@ -65,14 +72,19 @@ function Library() {
     }
   }
 
-  const handleUnsaved = async (e,id) => {
+  const handleUnsaved = async (e, index, id, savedCount) => {
     e.preventDefault();
     try {
+      let newCount = savedCount-1;
+      const clone = structuredClone(allDecks);
+      clone[index].savedCount = newCount;
+      setAllDecks(clone);
+      await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/decks/${id}`, {savedCount: newCount}, {new:true})
+
       console.log("Eliminado");
       const response = await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/remove-deck`, {deckId: id}, {new:true})
       console.log(response.data.deckLibrary.map(e => e.deckId));
 
-      
       setMyDecks(response.data.deckLibrary.map(e => e.deckId));
     } 
     catch (error) {
@@ -86,20 +98,30 @@ function Library() {
     <div id="library" className="flex-c g20 w-80">
       <div className="flex-r justify-between w-80">
         <h2>Library</h2>
-        <input type="text" className="w-50" placeholder="Search decks..."/>
+        <input onChange={(e) => setSearchValue(e.target.value)}type="text" className="w-50" placeholder="Search decks, tags, languages..." value={searchValue}/>
         <Link to="/decks/create"><button>+  Add deck</button></Link>
       </div>
       <div className="flex-r wrap g20 w-80">  
         {/* {allDecks.map((deck,index)=> <Deck key={`dcard-${index}`} deck={deck}/>)} */}
-        {allDecks.map((deck,index)=> {
+        {allDecks
+        .filter((deck)=> {
+          if(deck.deckName.toLowerCase().includes(searchValue.toLowerCase())) return true;
+          for(const lang of deck.languages) {
+            if(lang.toLowerCase().includes(searchValue.toLowerCase())) return true;
+          }
+          for(const tag of deck.tags) {
+            if(tag.toLowerCase().includes(searchValue.toLowerCase())) return true;
+          }
+        })
+        .map((deck,index)=> {
           return(
             <div key={index} id="my-decks-card" className="flex-c ">
               <div className="flex-c">
                 {myDecks.includes(deck._id) ? 
-                  <button onClick={(e)=>{handleUnsaved(e,deck._id)}} disabled={deck.owner === loggedUserId}>
+                  <button onClick={(e)=>{handleUnsaved(e,index,deck._id, deck.savedCount)}} disabled={deck.owner === loggedUserId}>
                     <img src={deck.owner === loggedUserId? ownerIcon:savedFillIcon} alt="save icon"/>
                   </button> : 
-                  <button onClick={(e)=>{handleSaved(e,deck._id)}} ><img src={savedIcon} alt="save icon" /></button>
+                  <button onClick={(e)=>{handleSaved(e,index,deck._id, deck.savedCount)}} ><img src={savedIcon} alt="save icon" /></button>
                 }
               </div>
               <Link to={`/decks/${deck._id}`} className="flex-r justify-between p10 h-100">
