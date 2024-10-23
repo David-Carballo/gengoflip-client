@@ -15,7 +15,7 @@
   z-index: 2;
 }
 
-#flashcard-create {
+#flashcard-create, #flashcard-details {
   position: relative;
   margin: 0 5%;
   border: 3px solid var(--green20-color);
@@ -37,8 +37,9 @@
 }
 
 #profile-img img {
-  width: 100%;
-  object-fit: cover;
+  /* width: 100%; */
+  object-fit:contain;
+  object-position: center;
   position: relative;
 }
 
@@ -81,6 +82,10 @@ input[name="cardName"] {
 }
 
 #flashcard-create label{
+  color: var(--background-color)
+}
+
+#flashcard-details label{
   color: var(--background-color)
 }
 
@@ -135,7 +140,7 @@ select{
 /* ? TABLET */
 @media (min-width: 480px) {
 
-  #flashcard-create {
+  #flashcard-create, #flashcard-details {
     max-width: 50%;
   }
   

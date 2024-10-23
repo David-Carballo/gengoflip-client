@@ -11,8 +11,46 @@
 }
 
 
+#my-decks-card {
+  background-color: var(--green20-color);
+  width: 40%;
+  height: 100px;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+#my-decks-card p{
+  font-size: 0.6rem;
+}
+
+#my-decks-card img {
+  width: 40%;
+  border-radius: 5px;
+}
+
+#my-decks-card img:nth-child(2){
+  width: 2%;
+}
+
+
 /* ? TABLET */
 @media (min-width: 480px) {
+  #my-decks-card {
+    width: 20%;
+  }
+  #my-decks-card p{
+    font-size: 0.8rem;
+  }
+  #my-decks-card img:nth-child(2){
+    width: 25%;
+  }
+  #my-decks-card img {
+    width: 30%;
+    border-radius: 5px;
+  }
+  
+
 
 }
 

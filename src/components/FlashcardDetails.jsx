@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import service from "../services/config";
+import '../styles/Flashcard.css';
+import enIcon from "../assets/en.png"
+import esIcon from "../assets/es.png"
+import frIcon from "../assets/fr.png"
+import deIcon from "../assets/de.png"
+import ptIcon from "../assets/pt.png"
+import itIcon from "../assets/it.png"
 
-function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
+function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMenu}) {
 
   useEffect(()=>{
     getFlashcardData();
@@ -11,7 +18,6 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
   //Get details of this flashcard
   const getFlashcardData = async () => {
     try {
-      console.log(flashId)
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`)
       console.log(response.data)
       setFlashcardData(response.data);
@@ -27,7 +33,7 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
   }
   
   const [flashcardData, setFlashcardData] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
 
 
   //Change values of this flashcard
@@ -69,6 +75,7 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
   const handleCloseCreate = (e) => {
     e.preventDefault();
     setIsCreating(-1);
+    handleDropMenu(-1)
   }
   const handleFileUpload = async (e) => {
     // console.log("The file to be uploaded is: ", e.target.files[0]);
@@ -101,14 +108,25 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
       console.log(error);
     }
   }
+  //Aux functions
+  const getFlag = (lang) => {
+    if(lang === "English") return enIcon;
+    else if(lang === "Spanish") return esIcon
+    else if(lang === "French") return frIcon
+    else if(lang === "German") return deIcon
+    else if(lang === "Portuguese") return ptIcon
+    else if(lang === "Italian") return itIcon
+  }
 
   if(!flashcardData) return(<h3>Loading...</h3>)
 
   return(
-    <div id="flashcard-bg">
+    <div id="flashcard-bg" className="flex-r center">
       <div id="flashcard-details" className="flex-c g10">
-        <button onClick={handleCloseCreate}>X</button>
-        <div className="flex-r w-100 justify-between">
+        <div className="w-100 flex-r justify-end">
+          <button onClick={handleCloseCreate}>X</button>
+        </div>
+        <div className="flex-r w-100 g20">
           <div id="profile-img">
             <div id="upload-btn" hidden={!isEditMode}>
               <input id="input-btn" type="file" name="imageUrl" onChange={handleFileUpload} /> 
@@ -117,11 +135,10 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
           </div>
           <input onChange={handleChange} placeholder="Name" type="text" name="cardName" value={flashcardData.cardName} disabled={!isEditMode}/>
         </div>
-        <div className="flex-c align-center w-100">
-          {/* <label>Description</label> */}
+        {/* <div className="flex-c align-center w-100">
           <textarea onChange={handleChange} className="w-100" placeholder="No description"type="text" name="description" rows="3" value={flashcardData.description} disabled={!isEditMode}/>
-        </div>
-        <div className="flex-r justify-start w-100 g20">
+        </div> */}
+        <div className="flex-r justify-start w-100 g10">
           <label>Original Language</label>
           <select onChange={handleChange} value={flashcardData.originalLang} name="originalLang" required disabled={!isEditMode}>
               <option value="English">English</option>
@@ -132,10 +149,18 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
               <option value="Italian">Italian</option>
           </select>
         </div>
-
-
+        <div className="flex-c g10 align-start w-100">
+          {flashcardData.translations.map((trans,index) =>{
+            return(
+              <div className="flex-r g10" key={index}>
+                <img src={getFlag(trans.lang)} alt="language flag" className="flags"/>
+                <p key={index}>{trans.translatedName}</p>
+              </div>
+            )
+          })}
+        </div>
         <div id="new-translation" className="flex-c align-start g10 w-100">
-          <label>Translations: </label>
+          <label>Add translation: </label>
           <div className="flex-r justify-start w-100 g20">
             <select onChange={handleChange} name="lang" value={flashcardData.translations[0].lang} required disabled={!isEditMode}>
                 <option value="English">English</option>
@@ -145,11 +170,11 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
                 <option value="Portuguese">Portuguese</option>
                 <option value="Italian">Italian</option>
             </select>
+            <input onChange={handleChange} placeholder="Name" type="text" name="translatedName" value={flashcardData.translations[0].translatedName} disabled={!isEditMode}/>
           </div>
           <div className="w-100">
             <div className="flex-c g10 align-start w-100">
-              <input onChange={handleChange} placeholder="Name" type="text" name="translatedName" value={flashcardData.translations[0].translatedName} disabled={!isEditMode}/>
-              <textarea onChange={handleChange} className="w-100" placeholder="Description" type="text" name="translatedDescription" value={flashcardData.translations[0].translatedDescription} disabled={!isEditMode}/>
+            {/* <textarea onChange={handleChange} className="w-100" placeholder="Description" type="text" name="translatedDescription" value={flashcardData.translations[0].translatedDescription} disabled={!isEditMode}/> */}
             </div>
 
           </div>
@@ -158,7 +183,7 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating}) {
 
         <div className="flex-r g10">
           {/* {isEditMode && <button onClick={handleEditMode}>Back</button>} */}
-          {<button onClick={handleEditMode}>{isEditMode? "X": "Edit"}</button>}
+          {<button onClick={handleEditMode}>{isEditMode? "Discard": "Edit"}</button>}
           {isEditMode && <button onClick={handleSave}>Save</button>}
           {<button onClick={handleDelete}>Delete</button>}
         </div>

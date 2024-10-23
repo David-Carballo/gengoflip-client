@@ -25,7 +25,7 @@ function DeckCreate() {
   const [newFlashcard, setNewFlashcard] = useState({
     cardName: "",
     description: "",
-    originalLang: "",
+    originalLang: "English",
     translations: [],
     imageUrl: ""
   })
@@ -62,12 +62,19 @@ function DeckCreate() {
     let index = newLangs.indexOf(e.target.value)
     if(index > -1) newLangs.splice(index, 1)
     else newLangs.push(e.target.value);
-    console.log(newLangs)
     setLanguages(newLangs);
   }
-  //
-  const handleDiscard = (e) => {
-    navigate(-1);
+  //Handle discard create
+  const handleDiscard = async (e) => {
+    try {
+      const ids = flashcardsList.map((e)=>e._id);
+      console.log(ids);
+      await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/many`, {ids : ids});
+      navigate(-1);
+    } 
+    catch (error) {
+      console.log(error)  
+    }
   } 
   //Call to Post new deck in db
   const handleCreate = async (e) => {
@@ -88,7 +95,7 @@ function DeckCreate() {
 
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/decks/`, newDeck);
 
-      await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile`, {deckId: response.data._id})
+      await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/add-deck`, {deckId: response.data._id})
       navigate(`/decks/${response.data._id}`);
     } 
     catch (error) {
@@ -109,15 +116,8 @@ function DeckCreate() {
     uploadData.append("image", e.target.files[0]);
 
     try {
-      // !IMPORTANT: Adapt the request structure to the one in your proyect (services, .env, auth, etc...)
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/uploads`, uploadData)
-      console.log(response.data.imageUrl);
       setImageUrl(response.data.imageUrl);
-      // setImageUrl(response.data.imageUrl);
-      //                          |
-      //     this is how the backend sends the image to the frontend => res.json({ imageUrl: req.file.path });
-
-      // setIsUploading(false); // to stop the loading animation
     } 
     catch (error) {
       console.log(error);
@@ -208,8 +208,8 @@ function DeckCreate() {
         <div className='flex-r g10 justify-start w-100'>
           {flashcardsList.map((flashcard,index)=>{
           return(
-            <div key= {`flash-${index}`} id="flashcard-container">
-              <p>{flashcard.cardName}</p>
+            <div key= {`flash-${index}`} id="flashcard-item">
+              <h5>{flashcard.cardName}</h5>
             </div>
           )
           })}

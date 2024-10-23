@@ -51,7 +51,6 @@ function DeckEdit() {
   const [flashcardsList, setFlashcardsList] = useState([]);
   
   useEffect(() => {
-    console.log("count2 changed!");
   }, [deckDetails]);
 
   //Handle states changes
@@ -139,8 +138,14 @@ function DeckEdit() {
     e.preventDefault();
     
     try {
+      const ids = flashcardsList.map((e)=>e._id);
+      await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/many`, {ids : ids});
+      
       await service.delete(`${import.meta.env.VITE_SERVER_URL}/api/decks/${params.deckId}`);
-      navigate("/profile");
+
+      await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/remove-deck`, {deckId: params.deckId})
+
+      navigate("/profile/library");
     } 
     catch (error) {
       console.log(error);  
@@ -164,7 +169,6 @@ function DeckEdit() {
     try {
       // !IMPORTANT: Adapt the request structure to the one in your proyect (services, .env, auth, etc...)
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/uploads`, uploadData)
-      console.log(response.data.imageUrl);
       setImageUrl(response.data.imageUrl);
       // setImageUrl(response.data.imageUrl);
       //                          |
@@ -177,14 +181,13 @@ function DeckEdit() {
     }
   }
 
-
   if(!deckDetails) return <h1>...Loading</h1>
 
   return(
-    <div id="deck-edit">
-      <div id="create-form" className='flex-c g20'>
+    <div id="deck-edit" className="flex-c g20 w-100 justify-between align-start">
+      <h2>Edit deck</h2>
         {/* Image + title */}
-        <div className="flex-r w-100 justify-between">
+        <div className="flex-r w-100 justify-start g50">
           <div id="profile-img">
             <div id="upload-btn">
               <input id="input-btn" type="file" name="image" onChange={handleFileUpload}/> 
@@ -193,16 +196,10 @@ function DeckEdit() {
           </div>
           <input onChange={handleChange} placeholder="Title" type="text" name="name" value={deckDetails.deckName}/>
         </div>
-
-        {/* Description */}
-        <textarea onChange={handleChange} placeholder="Write here the deck's description..." className="w-100" type="text" name="description" rows="3" value={deckDetails.description}/>
-        <div>
-          <label>Tags</label>
-          <input onChange={handleTag} type="text" name="tags" value={tag}/>
-          <button onClick={handleTagList}>+</button>
-        </div>
+       
+        
         {/* List of generated tags */}
-        <div className="flex-r">
+        <div className="flex-r wrap g10 w-100">
           {deckDetails.tags.map((tag,index) => {
             return (
               <div key={`tag-${index}`} id="deck-tags">
@@ -211,28 +208,56 @@ function DeckEdit() {
               </div>
             )}
           )}
+          <div className='flex-r w-50 justify-start'>
+            <div className='flex-r g10'>
+              <input onChange={handleTag} placeholder="Add new tags..." type="text" name="tags" value={tag}/>
+              <button onClick={handleTagList}>+</button>
+            </div>
+          </div>
+        </div>
+        
+         {/* Description */}
+         <textarea onChange={handleChange} placeholder="Write here the deck's description..." className="w-100" type="text" name="description" rows="3" value={deckDetails.description}/>
+
+        <p>What languages ​​does your deck support?</p>
+        <div id="languages-checkbox" className='flex-r wrap w-100 g10'>
+          <label className="container flex-r g10">
+            <input onChange={handleChangeLang} type="checkbox" name="en" value="English" checked={deckDetails.languages.includes("English")}/>
+            <div className="checkmark" style={{backgroundImage: `url(${enIcon})`}}></div>
+            <p>English</p>
+          </label>
+          <label className="container flex-r g10">
+            <input onChange={handleChangeLang} type="checkbox" name="es" value="Spanish" checked={deckDetails.languages.includes("Spanish")}/>
+            <div className="checkmark" style={{backgroundImage: `url(${esIcon})`}}></div>
+            <p>Spanish</p>
+          </label>
+          <label className="container flex-r g10">
+            <input onChange={handleChangeLang} type="checkbox" name="fr" value="French" checked={deckDetails.languages.includes("French")}/>
+            <div className="checkmark" style={{backgroundImage: `url(${frIcon})`}}></div>
+            <p>French</p>
+          </label>
+          <label className="container flex-r g10">
+            <input onChange={handleChangeLang} type="checkbox" name="de" value="German" checked={deckDetails.languages.includes("German")}/>
+            <div className="checkmark" style={{backgroundImage: `url(${deIcon})`}}></div>
+            <p>German</p>
+          </label>
+          <label className="container flex-r g10">
+            <input onChange={handleChangeLang} type="checkbox" name="pt" value="Portuguese" checked={deckDetails.languages.includes("Portuguese")}/>
+            <div className="checkmark" style={{backgroundImage: `url(${ptIcon})`}}></div>
+            <p>Portuguese</p>
+          </label>
+          <label className="container flex-r g10">
+            <input onChange={handleChangeLang} type="checkbox" name="it" value="Italian" checked={deckDetails.languages.includes("Italian")}/>
+            <div className="checkmark" style={{backgroundImage: `url(${itIcon})`}}></div>
+            <p>Italian</p>
+          </label>
         </div>
 
-        <div id="languages-checkbox" >
-          {/* <label><img src={enIcon} alt="english icon" /></label> */}
-          <label>English</label>
-          <input onChange={handleChangeLang} type="checkbox" name="en" value="English" defaultChecked={deckDetails.languages.includes("English")}/>
-          <label>Spanish</label>
-          <input onChange={handleChangeLang} type="checkbox" name="es" value="Spanish" defaultChecked={deckDetails.languages.includes("Spanish")}/>
-          <label>French</label>
-          <input onChange={handleChangeLang} type="checkbox" name="fr" value="French" defaultChecked={deckDetails.languages.includes("French")}/>
-          <label>German</label>
-          <input onChange={handleChangeLang} type="checkbox" name="de" value="German" defaultChecked={deckDetails.languages.includes("German")}/>
-          <label>Portuguese</label>
-          <input onChange={handleChangeLang} type="checkbox" name="pt" value="Portuguese" defaultChecked={deckDetails.languages.includes("Portuguese")}/>
-          <label>Italian</label>
-          <input onChange={handleChangeLang} type="checkbox" name="it" value="Italian" defaultChecked={deckDetails.languages.includes("Italian")}/>
-        </div>
-
-        {/* //TODO Flashcards Creation */}
+        <p>Flashcards</p>
+        {/* Flashcards Creation */}
         {isAdding && <FlashcardCreate setIsCreating={setIsAdding} newFlashcard={newFlashcard} setNewFlashcard={setNewFlashcard} setFlashcardsList={setFlashcardsList}/>}
         {/* {deckDetails.flashcards.map((fc,index)=><FlashcardDetails key={`fc-${index}`} flashId={fc._id} setDeckDetails={setDeckDetails}/>)} */}
-        <div className="flex-r wrap g20 w-100">
+        <div id="flashcards-container" className="flex-r wrap justify-start w-100">
           <div onClick={handleAddNewFlashcard} id="flashcard-item-add">
             <h2>+</h2>
           </div>
@@ -244,10 +269,10 @@ function DeckEdit() {
                   <hr/>
                   <p onClick={()=>handleDeleteFlashcard(index)}>Delete</p>
                 </div>}
-                <div >
+                <div>
                   <img onClick={()=>handleDropMenu(index)} id="edit-btn" src={editBtn} alt="edit button" />
                   {/* <img src={flashcard.imageUrl} alt="flashcard image" /> */}
-                  <img src={fc.imageUrl} alt="flashcard image" />
+                  {/* <img src={fc.imageUrl} alt="flashcard image" /> */}
                   <h5>{fc.cardName}</h5>
                 </div>
               </div>
@@ -255,14 +280,12 @@ function DeckEdit() {
           })}
         </div>
 
-        {/* <button>+</button> */}
-        {isCreating>=0 && <FlashcardDetails flashId={deckDetails.flashcards[isCreating]._id} setDeckDetails={setDeckDetails} setIsCreating={setIsCreating}/>}
+        {isCreating>=0 && <FlashcardDetails flashId={deckDetails.flashcards[isCreating]._id} setDeckDetails={setDeckDetails} setIsCreating={setIsCreating} handleDropMenu={handleDropMenu}/>}
 
         <div className="flex-r g20">
           <button onClick={handleSave}>Save changes</button>
           <button onClick={handleDelete}>Delete</button>
         </div>
-      </div>
     </div>
   );
 }

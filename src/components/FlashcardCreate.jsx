@@ -125,7 +125,7 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
         <div className="flex-c g10 align-start w-100">
           {translationsList.map((trans,index) =>{
             return(
-              <div className="flex-r g10">
+              <div className="flex-r g10" key={index}>
                 <img src={getFlag(trans.lang)} alt="language flag" className="flags"/>
                 <p key={index}>{trans.translatedName}</p>
               </div>
