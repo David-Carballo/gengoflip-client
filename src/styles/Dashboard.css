@@ -14,14 +14,10 @@
 
 #dashboard-panel{
   border-radius: 10px;
-  /* background-image: url(../assets/panel1.png);
-  background-position: center;
-  background-size: cover; */
   height: 150px;
   width: clamp(50%, 80%,90%);
   overflow: hidden;
   border: 2px solid var(--green10-color);
-  /* filter: brightness(0.8); */
   transition: 0.2s;
   position: relative;
 }
@@ -110,6 +106,36 @@
   align-items: center;
 }
 
+#dashboard-profile{
+  display: flex;
+  flex-direction: column;
+  
+
+  border-radius: 10px;
+  background-color: var(--light-color);
+  padding: 10px;
+  transition: 0.2s;
+}
+
+#dashboard-profile .title{
+  display: flex;
+  flex-direction: row;
+}
+
+#dashboard-profile .container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap:20px
+}
+
+#dashboard-profile:hover{
+  transform: translateY(-2px);
+  /* box-shadow: 0px 0px 10px 2px var(--light-color); */
+  transition: 0.5s;
+}
+
 #dashboard-profile img{
   width: 50%;
   aspect-ratio: 1/1;
@@ -120,8 +146,35 @@
   border: 2px solid var(--background-color);
 }
 
+#dashboard-profile .container div:nth-child(2) #progress{
+  background-color: rgba(255, 234, 0, 0.8);
+}
+
+#dashboard-profile .container div:nth-child(3) #progress{
+  background-color: rgba(70, 0, 56, 0.8);
+}
+
 /* ? TABLET */
 @media (min-width: 480px) {
+
+  #dashboard-profile{
+    display: flex;
+    flex-direction: row;
+  }
+
+  #dashboard-profile .title{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #dashboard-profile .container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap:20px
+  }
+  
 
   #dashboard-panel{
     height: 150px;

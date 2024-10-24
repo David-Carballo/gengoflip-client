@@ -20,9 +20,10 @@
 }
 
 #progress-bar{
+  border: 2px solid var(--dark-color);
   width: 200px;
   height: 20px;
-  background-color: var(--background-color);
+  background-color: var(--green60-color);
   border-radius: 20px;
   overflow: hidden;
 }

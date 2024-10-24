@@ -8,8 +8,13 @@
 
 #library #my-decks-card {
   position: relative;
-
 }
+
+#library #my-decks-card:hover {
+  position: relative;
+  box-shadow: 0px 0px 10px 2px var(--light-color);
+}
+
 a{
   text-decoration: none;
 }

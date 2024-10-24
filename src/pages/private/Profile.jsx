@@ -69,13 +69,36 @@ function Profile() {
     }
   }
 
+  const handleFileUpload = async (e) => {
+    // console.log("The file to be uploaded is: ", e.target.files[0]);
+
+    if (!e.target.files[0]) {
+      // to prevent accidentally clicking the choose file button and not selecting a file
+      return;
+    }
+
+    // setIsUploading(true); // to start the loading animation
+
+    const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
+    uploadData.append("image", e.target.files[0]);
+
+    try {
+      const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/uploads`, uploadData)
+      const cloneUserData = structuredClone(auxUserData);
+      cloneUserData.profileImg = response.data.imageUrl;
+      setAuxUserData(cloneUserData);
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   const getDecksCompleted = () => {
     let completed = 0;
     for(let i = 0; i<userData.deckLibrary.length; i++) {
       let total = userData.deckLibrary[i].deckId.flashcards.length;
       if(total === userData.deckLibrary[i].passedFlashcards) completed++;
     }
-    console.log(completed, " completed")
     return completed
   }
   const getDecksInProgress = () => {
@@ -84,8 +107,6 @@ function Profile() {
       let total = userData.deckLibrary[i].deckId.flashcards.length;
       if(userData.deckLibrary[i].passedFlashcards > 0 && userData.deckLibrary[i].passedFlashcards < total) inProgress++;
     }
-    console.log(inProgress, " inProgress")
-
     return inProgress
   }
   const getDecksToDo= () => {
@@ -93,8 +114,6 @@ function Profile() {
     for(let i = 0; i<userData.deckLibrary.length; i++) {
       if(userData.deckLibrary[i].previousLesson === null) toDo++;
     }
-    console.log(toDo, " toDo")
-
     return toDo
   }
 
@@ -113,10 +132,13 @@ function Profile() {
 
           {!isEditMode && <button onClick={handleEdit}>✏️</button>}
         </div>
-        <div className="flex-r g50">
+        <div id="profile-info" className="flex-r g50">
+          {isEditMode && 
+            <div id="upload-btn">
+              <input id="input-btn" type="file" name="imageUrl" onChange={handleFileUpload}/> 
+            </div>}
           <img src={auxUserData.profileImg} alt="profile-img"/>
           <h3>{auxUserData.username}</h3>
-
         </div>
         <hr/>
         <div className="flex-c align-start justify-center">
@@ -154,11 +176,10 @@ function Profile() {
           </div>
         </div>
       </div>
-
       {/* My sets */}
-      <Link to="/profile/library" id="profile-decks" className="w-80 flex-c g10 align-start">
+      <Link to="/profile/library" id="profile-decks" className="w-80 flex-c g10 align-center justify-center">
         <h4 className="flex-r">My decks</h4>
-        <div className="flex-r wrap w-100 g20">
+        <div className="flex-r wrap w-100 g20 justify-center">
           {userData.deckLibrary.length? userData.deckLibrary.map((deck,index) => {
             return(
               <div key={index} id="my-decks">

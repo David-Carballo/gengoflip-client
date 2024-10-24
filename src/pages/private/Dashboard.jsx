@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/Dashboard.css'
 import { useEffect, useState } from 'react';
-import bg1 from '../../assets/panel1.png'
 import service from '../../services/config';
 
 function Dashboard() {
@@ -10,14 +9,25 @@ function Dashboard() {
 
   useEffect(()=>{
     getMostRated();
+    getUserData();
   }
   ,[])
 
   const getMostRated = async () => {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/decks/`)
-      console.log(response.data.slice(0,5));
-      setMostDecks(response.data.slice(0,5));
+      response.data.sort((a,b)=>(a.savedCount > b.savedCount? -1 : 1))
+      setMostDecks(response.data.slice(0,3));
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserData = async () => {
+    try {
+      const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/`);
+      setUserData(response.data);
     } 
     catch (error) {
       console.log(error);
@@ -34,13 +44,38 @@ function Dashboard() {
     navigate("/decks/create");
   }
 
+  const getDecksCompleted = () => {
+    let completed = 0;
+    for(let i = 0; i<userData.deckLibrary.length; i++) {
+      let total = userData.deckLibrary[i].deckId.flashcards.length;
+      if(total === userData.deckLibrary[i].passedFlashcards) completed++;
+    }
+    return completed
+  }
+  const getDecksInProgress = () => {
+    let inProgress = 0;
+    for(let i = 0; i<userData.deckLibrary.length; i++) {
+      let total = userData.deckLibrary[i].deckId.flashcards.length;
+      if(userData.deckLibrary[i].passedFlashcards > 0 && userData.deckLibrary[i].passedFlashcards < total) inProgress++;
+    }
+    return inProgress
+  }
+  const getDecksToDo= () => {
+    let toDo = 0;
+    for(let i = 0; i<userData.deckLibrary.length; i++) {
+      if(userData.deckLibrary[i].previousLesson === null) toDo++;
+    }
+    return toDo
+  }
+
   const [searchValue, setSearchValue] = useState("");
   const [mostDecks, setMostDecks] = useState(null);
+  const [userData, setUserData] = useState(null);
 
-  if(!mostDecks) return <h3>Loading...</h3>
+  if(!mostDecks || !userData) return <h3>Loading...</h3>
 
   return(
-    <div id="dashboard" className='flex-c g20'>
+    <div id="dashboard" className='flex-c g50'>
 
       <div id="dashboard-bar" className='flex-r justify-between g20 w-80'>
         <input onChange={(e)=>setSearchValue(e.target.value)} onKeyDown={handleEnterSearch} value={searchValue} placeholder={`Search decks...`} className='w-50'/>
@@ -68,22 +103,33 @@ function Dashboard() {
         </div>
       </div>
 
-      <div id="dashboard-profile" className='w-80'>
-        <Link to="/profile" className='flex-r justify-end'>Profile</Link>
-        <div style={{height: "100px", backgroundColor: "var(--light-color)"}}>
-          <div className="flex-r justify-around">
+      <Link to="/profile" id="dashboard-profile" className='w-80'>
+          <div className='title'>
             <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="profile-img"/>
-            
-            <div className='flex-c w-80'>
-              <h3 className="w-100">Username</h3>
-              <p>Decks completed: 15/20</p>
-              <p>Decks in Progress: 15/20</p>
-              <p>Decks to do: 15/20</p>
-            </div>
-
+            <h3 className="w-100">{userData.username}</h3>
           </div>
-        </div>
-      </div>
+          <div className="container flex-r align-center g10">
+            <div>
+              <label>Completed ({getDecksCompleted()}/{userData.deckLibrary.length})</label>
+              <div id="progress-bar" className="flex-r g10">
+                <div id="progress" style={{width: `${200/(userData.deckLibrary.length)*getDecksCompleted()}px`}}></div>
+              </div>
+            </div>
+            <div>
+              <label>In Progress ({getDecksInProgress()}/{userData.deckLibrary.length}) </label>
+              <div id="progress-bar" className="flex-r g10">
+                <div id="progress" style={{width: `${200/(userData.deckLibrary.length)*getDecksInProgress()}px`}}></div>
+              </div>
+            </div>
+            <div>
+              <label>To Do ({getDecksToDo()}/{userData.deckLibrary.length})</label>
+              <div id="progress-bar" className="flex-r g10">
+                <div id="progress" style={{width: `${200/(userData.deckLibrary.length)*getDecksToDo()}px`}}></div>
+              </div>
+            </div>
+          </div>
+
+      </Link>
 
     </div>
   );
