@@ -113,7 +113,6 @@ hr{
 #profile-card #upload-btn{
     position: absolute;
     cursor: pointer !important;
-    boto: 0;
     left: 10px;
     width: 20px;  /* Fija el ancho del div */
     height: 20px;  /* Fija la altura del div */
