@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import service from '../../services/config';
 import { RotatingSquare } from 'react-loader-spinner'
 import { AuthContext } from '../../context/auth.context';
+import Notification from '../../components/Notification';
 
 function Dashboard() {
 
@@ -95,7 +96,7 @@ function Dashboard() {
 
   return(
     <div id="dashboard" className='flex-c g50'>
-
+      <Notification/>
       <div id="dashboard-bar" className='flex-r justify-between g20 w-80'>
         <input onChange={(e)=>setSearchValue(e.target.value)} onKeyDown={handleEnterSearch} value={searchValue} placeholder={`Search decks...`} className='w-50'/>
         <button onClick={handleCreate}>+ Create Deck</button>

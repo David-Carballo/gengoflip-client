@@ -4,6 +4,7 @@ import '../../styles/ProfileLibrary.css'
 import { Link } from "react-router-dom";
 import flashIcon from "../../assets/flashcard.svg"
 import { RotatingSquare } from 'react-loader-spinner'
+import Notification from "../../components/Notification";
 
 function ProfileLibrary() {
   useEffect(()=>{
@@ -42,7 +43,7 @@ function ProfileLibrary() {
   
   return(
     <div id="profile-library" className="flex-c g20 align-start">
-
+      <Notification/>
       <div className="flex-r justify-between w-100">
         <h2>My decks</h2>
         <input type="text" className="w-50" placeholder="Search decks..."/>

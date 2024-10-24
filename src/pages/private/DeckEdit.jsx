@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import service from "../../services/config";
 import FlashcardDetails from "../../components/FlashcardDetails";
@@ -11,10 +11,12 @@ import itIcon from "../../assets/it.png"
 import editBtn from "../../assets/dot-options.svg"
 import FlashcardCreate from "../../components/FlashcardCreate";
 import { RotatingSquare } from 'react-loader-spinner'
+import { NotifyContext } from "../../context/notify.context";
 
 function DeckEdit() {
   const navigate = useNavigate();
   const params = useParams();
+  const {setMessage, setShowNotification} = useContext(NotifyContext);
 
   useEffect(()=>{
     getDeckDetails();
@@ -132,6 +134,14 @@ function DeckEdit() {
     updatedDeck.flashcards = flashcardsList.map((e)=>e._id);
     try {
       const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/decks/${params.deckId}`, updatedDeck);
+      
+      setMessage("Deck edited successfully")
+      setShowNotification(true)
+      let timer=setTimeout(()=>{
+        setShowNotification(false)
+        clearTimeout(timer);
+      },[3000])
+      
       navigate(`/decks/${params.deckId}`);
     } 
     catch (error) {
@@ -149,6 +159,13 @@ function DeckEdit() {
       await service.delete(`${import.meta.env.VITE_SERVER_URL}/api/decks/${params.deckId}`);
 
       await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/remove-deck`, {deckId: params.deckId})
+
+      setMessage("Deck removed successfully")
+      setShowNotification(true)
+      let timer=setTimeout(()=>{
+        setShowNotification(false)
+        clearTimeout(timer);
+      },[3000])
 
       navigate("/profile/library");
     } 

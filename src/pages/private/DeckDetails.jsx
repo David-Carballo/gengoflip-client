@@ -13,6 +13,7 @@ import savedIcon from "../../assets/bookmark.svg";
 import flashIcon from "../../assets/flashcard.svg"
 import { AuthContext } from "../../context/auth.context";
 import { RotatingSquare } from 'react-loader-spinner'
+import Notification from "../../components/Notification";
 
 function DeckDetails() {
 
@@ -66,6 +67,7 @@ function DeckDetails() {
 
   return(
     <div id="deck-details" className="flex-c g20 justify-start align-start">
+      <Notification/>
       {/* GENERAL INFO */}
       <div id="deck-info" className="flex-r align-start h-100 g20 w-100">
         <img src={deckDetails.imageUrl} className="deck-img" alt="deck image"/>

@@ -33,12 +33,12 @@ body {
   --background-color: rgb(2, 48, 20);
   --secondary-color: rgb(101, 161, 94);
 
-  --green10-color: rgb(140, 191, 149); 
-  --green20-color: rgb(101, 161, 94);
-  --green30-color: rgb(64, 126, 54);
-  --green40-color: rgb(39, 81, 3);
-  --green50-color: rgb(2, 48, 20);
-  --green60-color: rgb(0, 36, 0);
+  --green10-color: rgb(140, 191, 149); /*#8cbf95*/
+  --green20-color: rgb(101, 161, 94);  /*#65a15e*/
+  --green30-color: rgb(64, 126, 54);   /*#407e36*/
+  --green40-color: rgb(39, 81, 3);     /*#275103*/
+  --green50-color: rgb(2, 48, 20);     /*#023014*/
+  --green60-color: rgb(0, 36, 0);      /*#002400*/
 
   --light-color: rgba(255,255,255, 0.2); 
   --dark-color: rgba(0,0,0, 0.2); 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import '../../styles/Deck.css'
 import service from '../../services/config';
 import { useNavigate } from 'react-router-dom';
@@ -9,10 +9,13 @@ import frIcon from "../../assets/fr.png"
 import deIcon from "../../assets/de.png"
 import ptIcon from "../../assets/pt.png"
 import itIcon from "../../assets/it.png"
+import Notification from '../../components/Notification';
+import { NotifyContext } from '../../context/notify.context';
 
 function DeckCreate() {
 
   const navigate = useNavigate();
+  const {setMessage, setShowNotification} = useContext(NotifyContext);
 
   //States
   const [deckName, setDeckName] = useState("");
@@ -32,11 +35,13 @@ function DeckCreate() {
   })
   const [flashcardsList, setFlashcardsList] = useState([]);
   const [isCreating, setIsCreating] = useState(false)
+
   //Handle input changes
   const handleName = (e) => setDeckName(e.target.value);
   const handleImage = (e) => setImageUrl(e.target.value);
   const handleDesc = (e) => setDescription(e.target.value);
   const handleTag = (e) => setTag(e.target.value);
+
   //Handle list of tags and add it to deck
   const handleTagList = (e) => {
     e.preventDefault();
@@ -44,6 +49,7 @@ function DeckCreate() {
     setTag("");
     setTagsList(newTags);
   }
+
   //Handle delete tag
   const handleDeleteTag = (e) => {
     e.preventDefault();
@@ -101,6 +107,14 @@ function DeckCreate() {
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/decks/`, newDeck);
 
       await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/add-deck`, {deckId: response.data._id})
+      
+      setMessage("Deck created successfully")
+      setShowNotification(true)
+      let timer=setTimeout(()=>{
+        setShowNotification(false)
+        clearTimeout(timer);
+      },[3000])
+
       navigate(`/decks/${response.data._id}`);
     } 
     catch (error) {
@@ -130,6 +144,7 @@ function DeckCreate() {
 
   return(
     <div id="deck-create" className='flex-c align-start g20'>
+        <Notification/>
         <div className='flex-r justify-between w-100'>
           <h2>Create new Deck</h2>
           <div className='flex-r g20'>

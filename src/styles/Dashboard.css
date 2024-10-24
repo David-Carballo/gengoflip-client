@@ -162,7 +162,7 @@
 @media (min-width: 480px) {
 
   #dashboard{
-    min-height: 95svh;
+    min-height: 100svh;
   }
 
   #dashboard-profile{

@@ -10,7 +10,7 @@ import savedIcon from "../../assets/bookmark.svg"
 import savedFillIcon from "../../assets/bookmark-fill.svg"
 import ownerIcon from "../../assets/person.svg"
 import flashIcon from "../../assets/flashcard.svg"
-import { Link, useParams, useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import '../../styles/Library.css'
 import { AuthContext } from "../../context/auth.context";
 import { RotatingSquare } from 'react-loader-spinner'
@@ -106,6 +106,7 @@ function Library() {
   
   return(
     <div id="library" className="flex-c g20 w-80">
+      
       <div className="flex-r justify-between w-80">
         <h2>Library</h2>
         <input onChange={(e) => setSearchValue(e.target.value)}type="text" className="w-50" placeholder="Search decks, tags, languages..." value={searchValue}/>
