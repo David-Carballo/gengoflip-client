@@ -69,6 +69,35 @@ function Profile() {
     }
   }
 
+  const getDecksCompleted = () => {
+    let completed = 0;
+    for(let i = 0; i<userData.deckLibrary.length; i++) {
+      let total = userData.deckLibrary[i].deckId.flashcards.length;
+      if(total === userData.deckLibrary[i].passedFlashcards) completed++;
+    }
+    console.log(completed, " completed")
+    return completed
+  }
+  const getDecksInProgress = () => {
+    let inProgress = 0;
+    for(let i = 0; i<userData.deckLibrary.length; i++) {
+      let total = userData.deckLibrary[i].deckId.flashcards.length;
+      if(userData.deckLibrary[i].passedFlashcards > 0 && userData.deckLibrary[i].passedFlashcards < total) inProgress++;
+    }
+    console.log(inProgress, " inProgress")
+
+    return inProgress
+  }
+  const getDecksToDo= () => {
+    let toDo = 0;
+    for(let i = 0; i<userData.deckLibrary.length; i++) {
+      if(userData.deckLibrary[i].previousLesson === null) toDo++;
+    }
+    console.log(toDo, " toDo")
+
+    return toDo
+  }
+
   if(!userData) return (<h3>Loading...</h3>)
 
   return(
@@ -90,16 +119,16 @@ function Profile() {
 
         </div>
         <hr/>
-        <div className="flex-c align-start">
-          <div className="w-100 flex-r justify-between">
-            <label>Email:</label>
+        <div className="flex-c align-start justify-center">
+          <div className="w-100 flex-r justify-start g20">
+            <label>Email:&emsp;&emsp;&nbsp;&nbsp;</label>
             <input type="text" value={auxUserData.email} disabled/>
           </div>
-          <div className="w-100 flex-r justify-between">
+          <div className="w-50 flex-r justify-start g20">
             <label>First Name:</label>
             <input onChange={handleChange} type="text" name="firstName" disabled={!isEditMode} value={auxUserData.firstName} />
           </div>
-          <div className="w-100 flex-r justify-between">
+          <div className="w-100 flex-r justify-start g20">
               <label>Last Name:</label>
               <input onChange={handleChange} type="text" name="lastName" disabled={!isEditMode} value={auxUserData.lastName} />
           </div>
@@ -107,16 +136,22 @@ function Profile() {
 
       </div>
       {/* User Progress */}
-      <div id="profile-progress" className="flex-r align-start g10">
-        <div className="flex-c align-start justify-between g10">
-          <label>Decks completed </label>
-          <label>Decks in Progress </label>
-          <label>Decks to Do </label>
+      <div id="profile-progress" className="flex-r align-center g10">
+        <div className="flex-c align-start justify-center g10">
+          <label>Completed ({getDecksCompleted()}/{userData.deckLibrary.length})</label>
+          <label>In Progress ({getDecksInProgress()}/{userData.deckLibrary.length}) </label>
+          <label>To Do ({getDecksToDo()}/{userData.deckLibrary.length})</label>
         </div>
-        <div className="flex-c align-start justify-between g20">
-          <input type="text" />
-          <input type="text" />
-          <input type="text" />
+        <div className="flex-c align-start justify-center g20">
+          <div id="progress-bar" className="flex-r g10">
+            <div id="progress" style={{width: `${200/(userData.deckLibrary.length)*getDecksCompleted()}px`}}></div>
+          </div>
+          <div id="progress-bar" className="flex-r g10">
+            <div id="progress" style={{width: `${200/(userData.deckLibrary.length)*getDecksInProgress()}px`}}></div>
+          </div>
+          <div id="progress-bar" className="flex-r g10">
+            <div id="progress" style={{width: `${200/(userData.deckLibrary.length)*getDecksToDo()}px`}}></div>
+          </div>
         </div>
       </div>
 

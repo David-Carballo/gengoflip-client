@@ -21,6 +21,7 @@
   min-width: 50%;
   border-radius: 5px;
   padding: 1%;
+  width: 20px;
 }
 
 #profile-decks{
@@ -97,6 +98,14 @@ hr{
   width: 100%;
 }
 
+#profile #progress-bar:nth-child(2) #progress{
+  background-color: rgba(255, 234, 0, 0.8);
+}
+
+#profile #progress-bar:nth-child(3) #progress{
+  background-color: rgba(70, 0, 56, 0.8);
+}
+
 
 
 #delete-btn{
@@ -126,8 +135,6 @@ hr{
     position: absolute;
     right: 5%;
   }
-
-
 
 }
 
