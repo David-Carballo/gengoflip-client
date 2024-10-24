@@ -24,6 +24,10 @@ function ProfileLibrary() {
     }
   }
 
+  const transformDate = (date) => {
+
+  }
+
   if(!allDecks) return(<h3>Loading...</h3>)
   
   return(
@@ -48,7 +52,7 @@ function ProfileLibrary() {
                       <p>{deck.passedFlashcards} / {deck.deckId.flashcards.length}</p>
                       <img src={flashIcon} alt="flashcard icon" />
                     </div>
-                    <p> {deck.previousLesson? deck.previousLesson : "Not yet"}</p>
+                    <p> {deck.previousLesson? deck.previousLesson.split('T')[0] : "Not yet"}</p>
                   </div>
                 </div>
               </Link>

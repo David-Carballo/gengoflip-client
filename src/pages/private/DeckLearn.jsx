@@ -33,12 +33,14 @@ function DeckLearn() {
 
   useEffect(()=>{
     if(deckDetails && progressValue === deckDetails.flashcards.length) {
+      handleFinishLearn();
       let timer = setTimeout(() => {
         navigate(`/decks/${deckDetails._id}`);
         clearTimeout(timer)
       }, 1000);
     }
   },[progressValue])
+
 
   const getDeckDetails = async () => {
     try {
@@ -78,8 +80,17 @@ function DeckLearn() {
   }
 
   const handleChangeLang = (e) => {
-    console.log(e.target.value);
     setTranslation(e.target.value);
+  }
+
+  const handleFinishLearn = async () => {
+    try {
+      const response = await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/${deckDetails._id}`, {id : deckDetails._id, learnedFlashcard});
+      console.log(response);
+    } 
+    catch (error) {
+      
+    }
   }
 
   const getFlag = (lang) => {
@@ -90,11 +101,6 @@ function DeckLearn() {
     else if(lang === "Portuguese") return ptIcon
     else if(lang === "Italian") return itIcon
   }
-
-  // const getTranslation = () => {
-  //   const index = deckDetails.flashcards.
-  //   return index;
-  // }
 
   if(!deckDetails ) return <h3>Loading...</h3>
   
