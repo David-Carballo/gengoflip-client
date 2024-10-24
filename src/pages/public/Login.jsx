@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context.jsx"
 import '../../styles/Login.css'
+import bgLogin from '../../assets/bg-login.jpg'
+import { RotatingLines } from 'react-loader-spinner'
 
 function Login() {
 
@@ -12,6 +14,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("")
+  const [isLogging, setIsLogging] = useState(false)
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -47,12 +50,16 @@ function Login() {
 
   useEffect(()=>{
     if(isLoggedIn) navigate("/profile");  
+
+    return(
+      setIsLogging(false)
+    )
   },[])
 
   return(
     <div id="login">
       <div id="login-card" className="flex-r">
-        <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="" className="w-50"/>
+        <img src={bgLogin} alt="" className="w-50"/>
         <div className="w-100 flex-c g10 p10">
           <h2>Welcome back</h2>
           <br/>
@@ -64,7 +71,18 @@ function Login() {
             <label className="w-100 start">Password</label>
             <input className="w-100 start" type="password" name="password" value={password} onChange={handlePasswordChange}/>
 
-            <button type="submit">Acceder</button>
+            <button type="submit" onClick={() => setIsLogging(true)} >Acceder</button>
+            {<RotatingLines
+              visible={isLogging && !errorMessage}
+              height="25"
+              width="25"
+              strokeColor="var(--background-color)"
+              strokeWidth="5"
+              animationDuration="0.75"
+              ariaLabel="rotating-lines-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              />}
             {errorMessage && <p>{errorMessage}</p>}
 
           </form>

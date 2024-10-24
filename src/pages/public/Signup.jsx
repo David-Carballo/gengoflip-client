@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import '../../styles/Signup.css'
+import bgSign from '../../assets/bg-signup.jpg'
 
 function Signup() {
   const { isLoggedIn} = useContext(AuthContext);
@@ -51,7 +52,7 @@ function Signup() {
   return(
     <div id="signup">
       <div id="signup-card"  className="flex-r">
-        <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="" className="w-50"/>
+        <img src={bgSign} alt="" className="w-50"/>
         <div className="w-100 flex-c g10 p10">
           <h2>Create an account</h2>
           <br/>

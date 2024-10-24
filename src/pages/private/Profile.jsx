@@ -3,6 +3,8 @@ import service from "../../services/config";
 import { AuthContext } from "../../context/auth.context";
 import '../../styles/Profile.css'
 import { Link, useNavigate } from "react-router-dom";
+import { RotatingSquare } from 'react-loader-spinner'
+
 
 function Profile() {
   const navigate = useNavigate()
@@ -117,8 +119,20 @@ function Profile() {
     return toDo
   }
 
-  if(!userData) return (<h3>Loading...</h3>)
-
+  if(!userData) return (
+    <div className="loading flex-c">
+      <RotatingSquare
+        visible={true}
+        height="100"
+        width="100"
+        strokeWidth="5"
+        color="rgb(64, 126, 54)"
+        ariaLabel="rotating-square-loading"
+        wrapperStyle={{borderRadius: "10px"}}
+        wrapperClass=""
+      />
+    </div>
+  )
   return(
     <div id="profile" className="flex-c g50">
       {/* Profile info */}

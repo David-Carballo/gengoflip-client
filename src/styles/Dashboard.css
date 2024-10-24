@@ -4,7 +4,7 @@
 
 #dashboard{
   min-width: 100%;
-  min-height: 95svh;
+  min-height: 130svh;
   padding: 5%;
 }
 
@@ -156,6 +156,10 @@
 
 /* ? TABLET */
 @media (min-width: 480px) {
+
+  #dashboard{
+    min-height: 95svh;
+  }
 
   #dashboard-profile{
     display: flex;

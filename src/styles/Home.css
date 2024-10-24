@@ -35,6 +35,18 @@
   transition: 0.3s;
 }
 
+#home h1{
+  line-height: 2rem;
+  width: 70%;
+  text-align:left;
+}
+
+#home p{
+  line-height: 2rem;
+  width: 90%;
+  text-align:left;
+}
+
 
 /* ? TABLET */
 @media (min-width: 480px) {

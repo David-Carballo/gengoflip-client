@@ -7,6 +7,7 @@ import frIcon from "../assets/fr.png"
 import deIcon from "../assets/de.png"
 import ptIcon from "../assets/pt.png"
 import itIcon from "../assets/it.png"
+import { RotatingSquare } from 'react-loader-spinner'
 
 function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMenu}) {
 
@@ -118,7 +119,20 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
     else if(lang === "Italian") return itIcon
   }
 
-  if(!flashcardData) return(<h3>Loading...</h3>)
+  if(!flashcardData) return (
+    <div className="loading flex-c">
+      <RotatingSquare
+        visible={true}
+        height="100"
+        width="100"
+        strokeWidth="5"
+        color="rgb(64, 126, 54)"
+        ariaLabel="rotating-square-loading"
+        wrapperStyle={{borderRadius: "10px"}}
+        wrapperClass=""
+      />
+    </div>
+  )
 
   return(
     <div id="flashcard-bg" className="flex-r center">

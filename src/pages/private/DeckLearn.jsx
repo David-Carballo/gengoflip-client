@@ -10,6 +10,7 @@ import frIcon from "../../assets/fr.png"
 import deIcon from "../../assets/de.png"
 import ptIcon from "../../assets/pt.png"
 import itIcon from "../../assets/it.png"
+import { RotatingSquare } from 'react-loader-spinner'
 
 function DeckLearn() {
   const {deckId} = useParams();
@@ -102,9 +103,27 @@ function DeckLearn() {
     else if(lang === "Italian") return itIcon
   }
 
-  if(!deckDetails ) return <h3>Loading...</h3>
+  if(!deckDetails ) return (
+    <div className="loading flex-c">
+      <RotatingSquare
+        visible={true}
+        height="100"
+        width="100"
+        strokeWidth="5"
+        color="rgb(64, 126, 54)"
+        ariaLabel="rotating-square-loading"
+        wrapperStyle={{borderRadius: "10px"}}
+        wrapperClass=""
+      />
+    </div>
+  )
   
-  if(progressValue === deckDetails.flashcards.length) return <h3>Congratulations...</h3>
+  if(progressValue === deckDetails.flashcards.length) return (
+    <div className="loading flex-c g20">
+      <h1>Congratulations!</h1>
+      <h3>{learnedFlashcard} flashcards learned!</h3>
+    </div>
+  )
 
   return(
     <div id="deck-learn" onKeyDown={handleFlip} >

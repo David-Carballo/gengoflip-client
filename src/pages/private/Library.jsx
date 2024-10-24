@@ -13,6 +13,7 @@ import flashIcon from "../../assets/flashcard.svg"
 import { Link, useParams, useSearchParams } from "react-router-dom"
 import '../../styles/Library.css'
 import { AuthContext } from "../../context/auth.context";
+import { RotatingSquare } from 'react-loader-spinner'
 
 function Library() {
 
@@ -93,7 +94,20 @@ function Library() {
     }
   }
 
-  if(!allDecks || !myDecks) return(<h3>Loading...</h3>)
+  if(!allDecks || !myDecks) return (
+    <div className="loading flex-c">
+      <RotatingSquare
+        visible={true}
+        height="100"
+        width="100"
+        strokeWidth="5"
+        color="rgb(64, 126, 54)"
+        ariaLabel="rotating-square-loading"
+        wrapperStyle={{borderRadius: "10px"}}
+        wrapperClass=""
+      />
+    </div>
+  )
   
   return(
     <div id="library" className="flex-c g20 w-80">

@@ -15,13 +15,13 @@ function Home() {
 
   return(
     <div id="home">
-      <div className="flex-c g40 center">
-        <h1>Aprende idiomas con nuestras flashcards personalizadas</h1>
+      <div className="flex-c g50 center">
+        <h1>Learn languages with our personalized flashcards</h1>
         <Link to="/signup">Get started</Link>
         <div className="flex-c g20 align-start">
-          <p>Crea, organiza y revisa tus flashcards de idiomas personalizadas</p>
-          <p>Practica vocabulario y gramática de forma fácil y efectiva</p>
-          <p>Ideal para cualquier nivel de aprendizaje.</p>
+          <p>Create, organize, and review your personalized language flashcards</p>
+          <p>Practice vocabulary and grammar easily and effectively</p>
+          <p>Ideal for any learning level</p>
         </div>
       </div>
       <div className="center">

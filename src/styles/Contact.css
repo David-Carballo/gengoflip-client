@@ -6,9 +6,24 @@
   padding: 5%;
 }
 
+#contact>p{
+  line-height: 1.5rem;
+  width: 70%;
+  text-align: justify;
+}
+
+#contact a:hover{
+  color: black;
+}
+
 /* ? TABLET */
 @media (min-width: 480px) {
-
+  #contact>p{
+    line-height: 2rem;
+    width: 50%;
+    text-align: justify;
+    text-justify: inter-word;
+  }
 }
 
 

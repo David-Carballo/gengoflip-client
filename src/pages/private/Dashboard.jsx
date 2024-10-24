@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/Dashboard.css'
 import { useEffect, useState } from 'react';
 import service from '../../services/config';
+import { RotatingSquare } from 'react-loader-spinner'
 
 function Dashboard() {
 
@@ -72,7 +73,20 @@ function Dashboard() {
   const [mostDecks, setMostDecks] = useState(null);
   const [userData, setUserData] = useState(null);
 
-  if(!mostDecks || !userData) return <h3>Loading...</h3>
+  if(!mostDecks || !userData) return (
+    <div className="loading flex-c">
+      <RotatingSquare
+        visible={true}
+        height="100"
+        width="100"
+        strokeWidth="5"
+        color="rgb(64, 126, 54)"
+        ariaLabel="rotating-square-loading"
+        wrapperStyle={{borderRadius: "10px"}}
+        wrapperClass=""
+      />
+    </div>
+  )
 
   return(
     <div id="dashboard" className='flex-c g50'>

@@ -124,7 +124,6 @@ function DeckCreate() {
     }
   }
 
-
   return(
     <div id="deck-create" className='flex-c align-start g20'>
         <div className='flex-r justify-between w-100'>

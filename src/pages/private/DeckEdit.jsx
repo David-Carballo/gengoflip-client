@@ -10,6 +10,7 @@ import ptIcon from "../../assets/pt.png"
 import itIcon from "../../assets/it.png"
 import editBtn from "../../assets/dot-options.svg"
 import FlashcardCreate from "../../components/FlashcardCreate";
+import { RotatingSquare } from 'react-loader-spinner'
 
 function DeckEdit() {
   const navigate = useNavigate();
@@ -181,7 +182,20 @@ function DeckEdit() {
     }
   }
 
-  if(!deckDetails) return <h1>...Loading</h1>
+  if(!deckDetails) return (
+    <div className="loading flex-c">
+      <RotatingSquare
+        visible={true}
+        height="100"
+        width="100"
+        strokeWidth="5"
+        color="rgb(64, 126, 54)"
+        ariaLabel="rotating-square-loading"
+        wrapperStyle={{borderRadius: "10px"}}
+        wrapperClass=""
+      />
+    </div>
+  )
 
   return(
     <div id="deck-edit" className="flex-c g20 w-100 justify-between align-start">

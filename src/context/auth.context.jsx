@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import service from "../services/config";
+import { RotatingSquare } from 'react-loader-spinner'
 
 // Componente de contexto
 const AuthContext = createContext()
@@ -41,8 +42,21 @@ function AuthWrapper(props) {
   }
 
   if (isValidatingToken) {
-    return <h3>... validando usuario</h3>
-    //todo Añadir loading o algun tipo de validación
+    return (
+      <div className="loading flex-c">
+        <h2>GengoFlip</h2>
+        <RotatingSquare
+          visible={true}
+          height="100"
+          width="100"
+          strokeWidth="5"
+          color="rgb(64, 126, 54)"
+          ariaLabel="rotating-square-loading"
+          wrapperStyle={{borderRadius: "10px"}}
+          wrapperClass=""
+        />
+      </div>
+    )
   }
 
   return (

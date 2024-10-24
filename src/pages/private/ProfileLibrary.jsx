@@ -3,6 +3,7 @@ import service from "../../services/config";
 import '../../styles/ProfileLibrary.css'
 import { Link } from "react-router-dom";
 import flashIcon from "../../assets/flashcard.svg"
+import { RotatingSquare } from 'react-loader-spinner'
 
 function ProfileLibrary() {
   useEffect(()=>{
@@ -24,11 +25,20 @@ function ProfileLibrary() {
     }
   }
 
-  const transformDate = (date) => {
-
-  }
-
-  if(!allDecks) return(<h3>Loading...</h3>)
+  if(!allDecks) return (
+    <div className="loading flex-c">
+      <RotatingSquare
+        visible={true}
+        height="100"
+        width="100"
+        strokeWidth="5"
+        color="rgb(64, 126, 54)"
+        ariaLabel="rotating-square-loading"
+        wrapperStyle={{borderRadius: "10px"}}
+        wrapperClass=""
+      />
+    </div>
+  )
   
   return(
     <div id="profile-library" className="flex-c g20 align-start">

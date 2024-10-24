@@ -12,6 +12,7 @@ import editIcon from "../../assets/edit.svg"
 import savedIcon from "../../assets/bookmark.svg";
 import flashIcon from "../../assets/flashcard.svg"
 import { AuthContext } from "../../context/auth.context";
+import { RotatingSquare } from 'react-loader-spinner'
 
 function DeckDetails() {
 
@@ -48,7 +49,20 @@ function DeckDetails() {
     if(deckDetails.owner._id === loggedUserId) setIsOwner(true);
   }
 
-  if(!deckDetails) return (<h1>Loading...</h1>)
+  if(!deckDetails) return (
+    <div className="loading flex-c">
+      <RotatingSquare
+        visible={true}
+        height="100"
+        width="100"
+        strokeWidth="5"
+        color="rgb(64, 126, 54)"
+        ariaLabel="rotating-square-loading"
+        wrapperStyle={{borderRadius: "10px"}}
+        wrapperClass=""
+      />
+    </div>
+  )
 
   return(
     <div id="deck-details" className="flex-c g20 justify-start align-start">
