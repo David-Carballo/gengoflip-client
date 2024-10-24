@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import '../../styles/DeckDetails.css'
 import service from "../../services/config";
 import enIcon from "../../assets/en.png"
@@ -15,6 +15,7 @@ import { AuthContext } from "../../context/auth.context";
 
 function DeckDetails() {
 
+  const navigate = useNavigate();
   const {deckId} = useParams();
   const [deckDetails, setDeckDetails] = useState(null);
   const [isOwner, setIsOwner] = useState(false)
@@ -37,6 +38,10 @@ function DeckDetails() {
     catch (error) {
       console.log(error)  
     }
+  }
+
+  const handleLearn = () => {
+    navigate(`/decks/${deckDetails._id}/learn`)
   }
 
   const checkOwner = () => {
@@ -79,18 +84,25 @@ function DeckDetails() {
               </div>
             </div>
           </div>
+
+          <div></div>
         </div>
         <div className="flex-r start">
           {isOwner && <Link to={`/decks/${deckId}/edit`}><img src={editIcon} alt="edit icon"/></Link>}
         </div>
       </div>
 
-      {/* TAGS */}
-      <div  className="flex-r align-start g20">
-        {deckDetails.tags.map((tag,index) => {
-          return (<label key={`tag-${index}`} id="deck-tags"> {tag}</label>)
-          })
-        }
+      
+      <div className="flex-r justify-between w-100">
+        {/* TAGS */}
+        <div className="flex-r align-start g20">
+          {deckDetails.tags.map((tag,index) => {
+            return (<label key={`tag-${index}`} id="deck-tags"> {tag}</label>)
+            })
+          }
+        </div>
+        {/* BUTTON */}
+        <button onClick={handleLearn} id="learn-btn">LEARN</button>
       </div>
       {/* FLASHCARDS */}
       {/* //TODO isEditMode & add [+] */}

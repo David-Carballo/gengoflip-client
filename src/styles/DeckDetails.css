@@ -34,11 +34,27 @@
   text-align: left;
 }
 
+#learn-btn {
+  border-radius: 2px;
+  width: 20%;
+}
+
+#learn-btn:active {
+  /* box-shadow: 0px 1px 2px 2px black,
+  inset 0px 1px 10px 2px var(--dark-color); */
+  box-shadow: inset 0px 1px 5px 2px var(--dark-color);
+}
+
 /* ? TABLET */
 @media (min-width: 480px) {
 
   #deck-details{
     padding: 5% 10%;
+  }
+
+  #learn-btn {
+    border-radius: 2px;
+    width: 10%;
   }
 
 }

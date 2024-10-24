@@ -18,6 +18,8 @@ import Library from './pages/private/Library'
 import DeckDetails from './pages/private/DeckDetails'
 import DeckCreate from './pages/private/DeckCreate'
 import DeckEdit from './pages/private/DeckEdit'
+import DeckLearn from './pages/private/DeckLearn'
+
 
 import { AuthContext } from './context/auth.context'
 import Sidebar from './components/Sidebar'
@@ -42,6 +44,7 @@ function App() {
         <Route path="/decks/:deckId" element={<Private><DeckDetails/></Private>}/>
         <Route path="/decks/create" element={<Private><DeckCreate/></Private>}/>
         <Route path="/decks/:deckId/edit" element={<Private><DeckEdit/></Private>}/>
+        <Route path="/decks/:deckId/learn" element={<Private><DeckLearn/></Private>}/>
       </Routes>
       {/* {!isLoggedIn && <Footer/>} */}
       
