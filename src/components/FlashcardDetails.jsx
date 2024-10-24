@@ -20,11 +20,10 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
   const getFlashcardData = async () => {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`)
-      console.log(response.data)
       setFlashcardData(response.data);
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
   //Change to edit Mode
@@ -48,11 +47,10 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
     e.preventDefault();
     try {
       const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`, flashcardData,{new: true});
-      console.log(response.data);
       setIsEditMode(false);
     } 
     catch (error) {
-      console.log(error);  
+      navigate("/error")
     }
   }
   //Call to Delete this flashcard
@@ -60,7 +58,6 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
     e.preventDefault();
 
     try {
-      console.log(flashId);
       await service.delete(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`);
       setDeckDetails((current) => {
         const clone = structuredClone(current);
@@ -69,7 +66,7 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
       })
     } 
     catch (error) {
-      console.log(error)  
+      navigate("/error") 
     }
   }
 
@@ -79,34 +76,25 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
     handleDropMenu(-1)
   }
   const handleFileUpload = async (e) => {
-    // console.log("The file to be uploaded is: ", e.target.files[0]);
 
     if (!e.target.files[0]) {
       // to prevent accidentally clicking the choose file button and not selecting a file
       return;
     }
 
-    // setIsUploading(true); // to start the loading animation
 
     const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
     uploadData.append("image", e.target.files[0]);
 
     try {
-      // !IMPORTANT: Adapt the request structure to the one in your proyect (services, .env, auth, etc...)
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/uploads`, uploadData)
-      console.log(response.data.imageUrl);
       const clone = structuredClone(newFlashcard);
       clone.imageUrl = response.data.imageUrl;
-      console.log(clone);
       setNewFlashcard(clone);
-      // setImageUrl(response.data.imageUrl);
-      //                          |
-      //     this is how the backend sends the image to the frontend => res.json({ imageUrl: req.file.path });
 
-      // setIsUploading(false); // to stop the loading animation
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
   //Aux functions

@@ -27,7 +27,6 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
   const handleAddLang = (e) => {
     e.preventDefault();
     setTranslationsList([...translationsList, translation]);
-    // setTranslation({lang:"", translatedName:"", translatedDesc:""});
   }
   const handleAddFlashcard = async (e) => {
     e.preventDefault();
@@ -44,7 +43,7 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
       setIsCreating(false);
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
   const handleCloseCreate = (e) => {
@@ -52,34 +51,23 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
     setIsCreating((current)=>!current);
   }
   const handleFileUpload = async (e) => {
-    // console.log("The file to be uploaded is: ", e.target.files[0]);
 
     if (!e.target.files[0]) {
       // to prevent accidentally clicking the choose file button and not selecting a file
       return;
     }
 
-    // setIsUploading(true); // to start the loading animation
-
     const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
     uploadData.append("image", e.target.files[0]);
 
     try {
-      // !IMPORTANT: Adapt the request structure to the one in your proyect (services, .env, auth, etc...)
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/uploads`, uploadData)
-      console.log(response.data.imageUrl);
       const clone = structuredClone(newFlashcard);
       clone.imageUrl = response.data.imageUrl;
-      console.log(clone);
       setNewFlashcard(clone);
-      // setImageUrl(response.data.imageUrl);
-      //                          |
-      //     this is how the backend sends the image to the frontend => res.json({ imageUrl: req.file.path });
-
-      // setIsUploading(false); // to stop the loading animation
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
 

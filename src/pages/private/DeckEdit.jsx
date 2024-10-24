@@ -25,12 +25,12 @@ function DeckEdit() {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/decks/${params.deckId}`);
       setDeckDetails(response.data);
-      console.log(response.data);
+
       setTagsList(response.data.tags);
       setFlashcardsList(response.data.flashcards)
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
   
@@ -74,7 +74,6 @@ function DeckEdit() {
     setTag("");
     setTagsList(newTags)
     setDeckDetails(deckClone);
-    console.log(deckClone);
   }
   //Handle value of languages checkboxes
   const handleChangeLang = (e) => {
@@ -110,7 +109,6 @@ function DeckEdit() {
     flashIds.splice(index, 1)
     const deckClone = structuredClone(deckDetails);
     deckClone.flashcards = flashIds;
-    console.log(deckClone)
     setDeckDetails(deckClone);
     setFlashcardsList(flashIds);
   }
@@ -131,7 +129,7 @@ function DeckEdit() {
       navigate(`/decks/${params.deckId}`);
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
   //Call to Delete this deck
@@ -149,36 +147,27 @@ function DeckEdit() {
       navigate("/profile/library");
     } 
     catch (error) {
-      console.log(error);  
+      navigate("/error") 
     }
   }
 
   //Upload image
   const handleFileUpload = async (e) => {
-    // console.log("The file to be uploaded is: ", e.target.files[0]);
 
     if (!e.target.files[0]) {
       // to prevent accidentally clicking the choose file button and not selecting a file
       return;
     }
 
-    // setIsUploading(true); // to start the loading animation
-
     const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
     uploadData.append("image", e.target.files[0]);
 
     try {
-      // !IMPORTANT: Adapt the request structure to the one in your proyect (services, .env, auth, etc...)
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/uploads`, uploadData)
       setImageUrl(response.data.imageUrl);
-      // setImageUrl(response.data.imageUrl);
-      //                          |
-      //     this is how the backend sends the image to the frontend => res.json({ imageUrl: req.file.path });
-
-      // setIsUploading(false); // to stop the loading animation
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
 

@@ -20,7 +20,6 @@ function DeckDetails() {
   const {deckId} = useParams();
   const [deckDetails, setDeckDetails] = useState(null);
   const [isOwner, setIsOwner] = useState(false)
-  const [isEditMode, setIsEditMode] = useState(false);
   const {loggedUserId} = useContext(AuthContext);
 
   useEffect(()=>{
@@ -37,7 +36,7 @@ function DeckDetails() {
       setDeckDetails(response.data)
     } 
     catch (error) {
-      console.log(error)  
+      navigate("/error")
     }
   }
 
@@ -124,7 +123,6 @@ function DeckDetails() {
         {deckDetails.flashcards.map((flashcard,index)=>{
           return(
             <div id="flashcard-item" key={index}>
-              {/* <img src={flashcard.imageUrl} alt="flashcard image" /> */}
               {flashcard.imageUrl && <img src={flashcard.imageUrl} alt="flashcard image" />}
               <h5>{flashcard.cardName}</h5>
             </div>

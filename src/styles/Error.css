@@ -1,0 +1,23 @@
+/* import '../../styles/Contact.css' */
+
+/* ? MOBILE */
+
+#error, #not-found{
+  min-width: 100%;
+  min-height: 95svh;
+  padding: 5%;
+}
+
+
+/* ? TABLET */
+@media (min-width: 480px) {
+
+
+}
+
+
+/* ? PC */
+@media (min-width: 1024px) {
+
+
+}

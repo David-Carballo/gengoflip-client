@@ -3,7 +3,7 @@ import logoGithub from '../../assets/github.svg'
 
 function Contact() {
   return(
-    <section id="contact" class="contact-header flex-c justify-between">
+    <section id="contact" className="contact-header flex-c justify-between">
         <h1>Contact us</h1>
         
         <p>Our platform allows users to register, create, and manage their own sets of flashcards to practice vocabulary in a personalized way. Users can review their flashcards and improve their learning interactively. The website is part of the final project for a course, demonstrating skills in web application development using modern technologies</p>

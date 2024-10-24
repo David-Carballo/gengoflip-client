@@ -1,16 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/Dashboard.css'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import service from '../../services/config';
 import { RotatingSquare } from 'react-loader-spinner'
+import { AuthContext } from '../../context/auth.context';
 
 function Dashboard() {
 
   const navigate = useNavigate();
-
+  const {isLoggedIn} = useContext(AuthContext);
+  
   useEffect(()=>{
-    getMostRated();
-    getUserData();
+    if(isLoggedIn) {
+      getMostRated();
+      getUserData();
+    }
+    else navigate("/");
   }
   ,[])
 
@@ -21,7 +26,7 @@ function Dashboard() {
       setMostDecks(response.data.slice(0,3));
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   };
 
@@ -31,7 +36,7 @@ function Dashboard() {
       setUserData(response.data);
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   };
 

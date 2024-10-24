@@ -47,11 +47,10 @@ function DeckLearn() {
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/decks/${deckId}`);
       setDeckDetails(response.data);
-      console.log(response.data);
       setTranslation(response.data.flashcards[0].translations[0].lang)
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
 
@@ -87,10 +86,9 @@ function DeckLearn() {
   const handleFinishLearn = async () => {
     try {
       const response = await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/${deckDetails._id}`, {id : deckDetails._id, learnedFlashcard});
-      console.log(response);
     } 
     catch (error) {
-      
+      navigate("/error")
     }
   }
 

@@ -16,10 +16,10 @@ function AuthWrapper(props) {
     authenticateUser()
   }, [])
 
+
   const authenticateUser = async () => {
     try {
       const response = await service.get("/auth/verify")
-
       // si token valido
       setIsLoggedIn(true)
       setLoggedUserId(response.data._id)

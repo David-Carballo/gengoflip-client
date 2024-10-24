@@ -38,7 +38,7 @@ function Library() {
       setAllDecks(response.data);
     } 
     catch (error) {
-      console.log(error);  
+      navigate("/error") 
     }
   }
 
@@ -48,7 +48,7 @@ function Library() {
       setMyDecks(response.data.deckLibrary.map(e => e.deckId._id))
     } 
     catch (error) {
-      console.log(error)  
+      navigate("/error") 
     }
   }
 
@@ -61,16 +61,13 @@ function Library() {
       setAllDecks(clone);
       await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/decks/${id}`, {savedCount: newCount}, {new:true})
 
-      console.log("Guardado");
-      const response = await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/add-deck`, {deckId: id}, {new:true})
-      console.log(response.data);
-      
+      const response = await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/add-deck`, {deckId: id}, {new:true})     
 
       setMyDecks(response.data.deckLibrary.map(e => e.deckId));
 
     } 
     catch (error) {
-      console.log(error)
+      navigate("/error")
     }
   }
 
@@ -83,14 +80,12 @@ function Library() {
       setAllDecks(clone);
       await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/decks/${id}`, {savedCount: newCount}, {new:true})
 
-      console.log("Eliminado");
       const response = await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/users/profile/remove-deck`, {deckId: id}, {new:true})
-      console.log(response.data.deckLibrary.map(e => e.deckId));
 
       setMyDecks(response.data.deckLibrary.map(e => e.deckId));
     } 
     catch (error) {
-      console.log(error)
+      navigate("/error")
     }
   }
 

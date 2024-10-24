@@ -10,6 +10,7 @@ function Home() {
   const {isLoggedIn} = useContext(AuthContext);
 
   useEffect(()=>{
+    console.log(isLoggedIn);
     if(isLoggedIn) navigate("/dashboard");  
   },[])
 

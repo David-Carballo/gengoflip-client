@@ -8,14 +8,21 @@ import logoutIcon from '../assets/log-out.svg'
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 
-function Sidebar({setIsDarkTheme}) {
-  const { authenticateUser } = useContext(AuthContext)
+function Sidebar() {
+  const { authenticateUser} = useContext(AuthContext)
   const navigate = useNavigate();
   
   const handleLogout = async () => {
+    
     localStorage.removeItem("authToken");
-    await authenticateUser();
-    navigate("/login")
+    try {
+      await authenticateUser();
+      
+      window.location.href=("/")
+    } 
+    catch (error) {
+      navigate("/error")
+    }
   }
 
   return(
@@ -37,10 +44,6 @@ function Sidebar({setIsDarkTheme}) {
           <img src={logoutIcon} alt="logout icon" />
           <p className="mobile">Logout</p>
         </Link>
-      </div>
-      <div id="sidebar-footer">
-        {/* <button onClick={()=> {setIsDarkTheme((current)=>!current)}}><img src={libraryIcon} alt="home icon" /></button> */}
-        {/* <Footer/> */}
       </div>
 
     </div>

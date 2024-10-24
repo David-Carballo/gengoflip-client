@@ -43,14 +43,14 @@ function Login() {
       if (error.response.status === 400) {
         setErrorMessage(error.response.data.message)
       } else {
-        //! aqui deberia haber redirección a /error
+        navigate("/error")
       }
     }
   };
 
   useEffect(()=>{
     if(isLoggedIn) navigate("/profile");  
-
+    
     return(
       setIsLogging(false)
     )
@@ -69,7 +69,7 @@ function Login() {
             <label className="w-100 start">Email</label>
             <input className="w-100 start" type="email" name="email" value={email} onChange={handleEmailChange}/>
             <label className="w-100 start">Password</label>
-            <input className="w-100 start" type="password" name="password" value={password} onChange={handlePasswordChange}/>
+            <input className="w-100 start" type="password" name="password" value={password} autoComplete="on" onChange={handlePasswordChange}/>
 
             <button type="submit" onClick={() => setIsLogging(true)} >Acceder</button>
             {<RotatingLines

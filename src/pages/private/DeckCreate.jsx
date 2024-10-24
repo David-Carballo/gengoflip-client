@@ -68,12 +68,11 @@ function DeckCreate() {
   const handleDiscard = async (e) => {
     try {
       const ids = flashcardsList.map((e)=>e._id);
-      console.log(ids);
       await service.patch(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/many`, {ids : ids});
       navigate(-1);
     } 
     catch (error) {
-      console.log(error)  
+      navigate("/error")
     }
   } 
   //Call to Post new deck in db
@@ -99,11 +98,10 @@ function DeckCreate() {
       navigate(`/decks/${response.data._id}`);
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
   const handleFileUpload = async (e) => {
-    // console.log("The file to be uploaded is: ", e.target.files[0]);
 
     if (!e.target.files[0]) {
       // to prevent accidentally clicking the choose file button and not selecting a file
@@ -120,7 +118,7 @@ function DeckCreate() {
       setImageUrl(response.data.imageUrl);
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
 

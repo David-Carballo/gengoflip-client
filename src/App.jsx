@@ -5,6 +5,7 @@ import { useContext, useState } from 'react'
 import Navbar from './components/Navbar'
 import Private from './components/Private'
 import Footer from './components/Footer'
+import Sidebar from './components/Sidebar'
 
 import Home from './pages/public/Home'
 import Signup from './pages/public/Signup'
@@ -19,10 +20,11 @@ import DeckDetails from './pages/private/DeckDetails'
 import DeckCreate from './pages/private/DeckCreate'
 import DeckEdit from './pages/private/DeckEdit'
 import DeckLearn from './pages/private/DeckLearn'
-
+import NotFound from './pages/errors/NotFound'
+import Error from './pages/errors/Error'
 
 import { AuthContext } from './context/auth.context'
-import Sidebar from './components/Sidebar'
+
 
 
 function App() {
@@ -42,9 +44,13 @@ function App() {
         <Route path="/profile/library" element={<Private><ProfileLibrary/></Private>}/>
         <Route path="/library" element={<Private><Library/></Private>}/>
         <Route path="/decks/:deckId" element={<Private><DeckDetails/></Private>}/>
+        <Route path="/decks/:deckId/create" element={<Private><DeckDetails/></Private>}/>
         <Route path="/decks/create" element={<Private><DeckCreate/></Private>}/>
         <Route path="/decks/:deckId/edit" element={<Private><DeckEdit/></Private>}/>
         <Route path="/decks/:deckId/learn" element={<Private><DeckLearn/></Private>}/>
+
+        <Route path="/error" element={<Error/>} />
+        <Route path="*" element={<NotFound/>} />
       </Routes>
       {/* {!isLoggedIn && <Footer/>} */}
       

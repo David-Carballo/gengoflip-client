@@ -20,10 +20,9 @@ function Profile() {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/users/profile`)
       setUserData(response.data);
       setAuxUserData(response.data);
-      console.log(response.data)
     } 
     catch (error) {
-      console.log(error)
+      navigate("/error")
     }
   }
 
@@ -48,11 +47,15 @@ function Profile() {
   //Handle CRUD User
   const handleDeleteUser = async (e) => {
     e.preventDefault();
-    const response = await service.delete(`${import.meta.env.VITE_SERVER_URL}/api/users/delete`)
-    console.log(response);
-    localStorage.removeItem("authToken")
-    await authenticateUser();
-    navigate("/")
+    try {
+      const response = await service.delete(`${import.meta.env.VITE_SERVER_URL}/api/users/delete`)
+      localStorage.removeItem("authToken")
+      await authenticateUser();
+      navigate("/")
+    } 
+    catch (error) {
+      navigate("/error")  
+    }
   }
   const handleEdit = (e) => {
     e.preventDefault();
@@ -62,12 +65,11 @@ function Profile() {
     e.preventDefault();
     try {
       const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/users/profile`, auxUserData, {new: true})
-      console.log(response)
       setIsEditMode(false);
       setUserData(auxUserData);
     } 
     catch (error) {
-      console.log(error);  
+      navigate("/error")
     }
   }
 
@@ -91,7 +93,7 @@ function Profile() {
       setAuxUserData(cloneUserData);
     } 
     catch (error) {
-      console.log(error);
+      navigate("/error")
     }
   }
 
