@@ -98,12 +98,16 @@ hr{
   width: 100%;
 }
 
+#profile #progress-bar:nth-child(1) #progress{
+  background: repeating-linear-gradient(60deg, var(--green30-color), var(--green30-color) 20px, var(--green20-color) 20px, var(--green20-color) 40px);
+}
+
 #profile #progress-bar:nth-child(2) #progress{
-  background-color: rgba(255, 234, 0, 0.8);
+  background: repeating-linear-gradient(60deg, rgb(26, 74, 125), rgb(26, 74, 125) 20px, rgb(45, 108, 159) 20px, rgb(45, 108, 159) 40px);
 }
 
 #profile #progress-bar:nth-child(3) #progress{
-  background-color: rgba(70, 0, 56, 0.8);
+  background: repeating-linear-gradient(60deg, rgb(121, 121, 121), rgb(121, 121, 121) 20px, rgb(68, 68, 68) 20px, rgb(68, 68, 68) 40px);
 }
 
 #profile-card #profile-info{

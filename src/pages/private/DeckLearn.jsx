@@ -22,6 +22,7 @@ function DeckLearn() {
   const [currentFlashcard, setCurrentFlashcard] = useState(0);
   const [learnedFlashcard, setLearnedFlashcard] = useState(0);
   const [translation, setTranslation] = useState([]);
+  const [animation, setAnimation] = useState("");
 
   useEffect(()=>{
     getDeckDetails();
@@ -38,7 +39,7 @@ function DeckLearn() {
       let timer = setTimeout(() => {
         navigate(`/decks/${deckDetails._id}`);
         clearTimeout(timer)
-      }, 1000);
+      }, 2000);
     }
   },[progressValue])
 
@@ -68,15 +69,25 @@ function DeckLearn() {
   const handleReview = (e) => {
     e.preventDefault();
     setProgressValue(current=>current+1)
-    setCurrentFlashcard(current=>current+1)
+    setAnimation("left")
+    let timer = setTimeout(()=>{
+      setCurrentFlashcard(current=>current+1)
+      setAnimation("")
+      clearTimeout(timer);
+    },[1000])
     
   }
 
   const handleLearned = (e) => {
     e.preventDefault();
     setProgressValue(current=>current+1)
-    setCurrentFlashcard(current=>current+1)
     setLearnedFlashcard(current=>current+1)
+    setAnimation("right")
+    let timer = setTimeout(()=>{
+      setCurrentFlashcard(current=>current+1)
+      setAnimation("")
+      clearTimeout(timer);
+    },[1000])
   }
 
   const handleChangeLang = (e) => {
@@ -118,7 +129,7 @@ function DeckLearn() {
   
   if(progressValue === deckDetails.flashcards.length) return (
     <div className="loading flex-c g20">
-      <h1>Congratulations!</h1>
+      <h1 className="congrats">Congratulations!</h1>
       <h3>{learnedFlashcard} flashcards learned!</h3>
     </div>
   )
@@ -143,13 +154,13 @@ function DeckLearn() {
         <h2>{deckDetails.deckName}</h2>
         {/* progress bar */}
         <div id="progress-bar" className="flex-r g10">
-          <div id="progress" style={{width: `${(200/(deckDetails.flashcards.length-1)*progressValue)}px`}}></div>
+          <div id="progress" style={{width: `${(200/(deckDetails.flashcards.length)*progressValue)}px`}}></div>
         </div>
         {/* flashcard card + buttons*/}
         <div id="card-container" className="flex-r justify-center g20">
           <img onClick={handleReview} src={leftIcon} alt="left arrow" className="arrow-color"/>
-          <div className="flip-card" onClick={handleFlip} >
-            <div className={`${isFront? "flip" : null} flip-card-inner`}>
+          <div className="flip-card" onClick={handleFlip} swift={animation}>
+            <div className={`${isFront? "flip" : null} flip-card-inner`} >
               <div className="flip-card-front flex-c g10 justify-around">
               {deckDetails.flashcards[currentFlashcard].imageUrl && <img src={deckDetails.flashcards[currentFlashcard].imageUrl} alt="flashcard image"/>}
                 <h2>{deckDetails.flashcards[currentFlashcard].cardName}</h2>

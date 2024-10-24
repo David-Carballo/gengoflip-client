@@ -41,7 +41,8 @@ function DeckEdit() {
   const [dropMenu, setDropMenu] = useState(-1);
   const [isCreating, setIsCreating] = useState(-1)
   const [isAdding, setIsAdding] = useState(false)
-  
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [newFlashcard, setNewFlashcard] = useState({
     cardName: "",
     description: "",
@@ -121,6 +122,11 @@ function DeckEdit() {
   //Call to Update changes of this deck
   const handleSave = async (e) => {
     e.preventDefault();
+    if(!deckDetails.deckName || !deckDetails.languages.length || !deckDetails.flashcards.length ){
+      setErrorMessage("Complete all fields")
+      return;
+    }
+
     const updatedDeck = structuredClone(deckDetails);
     updatedDeck.tags = tagsList;
     updatedDeck.flashcards = flashcardsList.map((e)=>e._id);
@@ -151,6 +157,12 @@ function DeckEdit() {
     }
   }
 
+  const handleChangeImage = (imageUrl) => {
+    const deckClone = structuredClone(deckDetails);
+    deckClone.imageUrl = imageUrl;
+    setDeckDetails(deckClone);
+  }
+
   //Upload image
   const handleFileUpload = async (e) => {
 
@@ -164,7 +176,8 @@ function DeckEdit() {
 
     try {
       const response = await service.post(`${import.meta.env.VITE_SERVER_URL}/api/uploads`, uploadData)
-      setImageUrl(response.data.imageUrl);
+
+      handleChangeImage(response.data.imageUrl);
     } 
     catch (error) {
       navigate("/error")
@@ -288,6 +301,7 @@ function DeckEdit() {
         <div className="flex-r g20">
           <button onClick={handleSave}>Save changes</button>
           <button onClick={handleDelete}>Delete</button>
+          {errorMessage && <p style={{color: "red"}}>{errorMessage}</p>}
         </div>
     </div>
   );

@@ -24,6 +24,7 @@ function DeckDetails() {
 
   useEffect(()=>{
     getDeckDetails();
+    // getUserLibrary();
   },[])
   
   useEffect(()=>{

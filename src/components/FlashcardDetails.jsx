@@ -21,6 +21,7 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`)
       setFlashcardData(response.data);
+      console.log(response.data);
     } 
     catch (error) {
       navigate("/error")
@@ -34,7 +35,8 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
   
   const [flashcardData, setFlashcardData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
-
+  const [translation, setTranslation] = useState({lang:"English", translatedName:"", translatedDescription:""});
+  const [errorMessage, setErrorMessage] = useState("");
 
   //Change values of this flashcard
   const handleChange = (e) => {
@@ -42,9 +44,44 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
     clone[e.target.name] = e.target.value;
     setFlashcardData(clone)
   }
+
+  //Change translation language
+  const handleChangeLang = (e) => {
+    const transClone = structuredClone(translation);
+    transClone[e.target.name] = e.target.value;
+    setTranslation(transClone);
+  }
+
+  //Add translation
+  const handleAddLang = (e) => {
+    e.preventDefault();
+    if(!translation.translatedName || !translation.lang) {
+      setErrorMessage("Add translated name");
+      return;
+    }
+    const clone = structuredClone(flashcardData);
+    clone.translations.push(translation)
+    console.log(clone);
+    setFlashcardData(clone);
+  }
+
+  //Remove translation
+  const handleRemoveLang = (e,index) => {
+    e.preventDefault();
+    const clone = structuredClone(flashcardData);
+    clone.translations.splice(index,1);
+    console.log(clone);
+    setFlashcardData(clone);
+  }
+
   //Call to Add new flashcard to db
   const handleSave = async (e) => {
     e.preventDefault();
+    if(!flashcardData.cardName || !flashcardData.originalLang || !flashcardData.translations.length) {
+      setErrorMessage("Complete all fields");
+      return;
+    }
+
     try {
       const response = await service.put(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`, flashcardData,{new: true});
       setIsEditMode(false);
@@ -81,8 +118,6 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
       // to prevent accidentally clicking the choose file button and not selecting a file
       return;
     }
-
-
     const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
     uploadData.append("image", e.target.files[0]);
 
@@ -137,9 +172,6 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
           </div>
           <input onChange={handleChange} placeholder="Name" type="text" name="cardName" value={flashcardData.cardName} disabled={!isEditMode}/>
         </div>
-        {/* <div className="flex-c align-center w-100">
-          <textarea onChange={handleChange} className="w-100" placeholder="No description"type="text" name="description" rows="3" value={flashcardData.description} disabled={!isEditMode}/>
-        </div> */}
         <div className="flex-r justify-start w-100 g10">
           <label>Original Language</label>
           <select onChange={handleChange} value={flashcardData.originalLang} name="originalLang" required disabled={!isEditMode}>
@@ -157,6 +189,7 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
               <div className="flex-r g10" key={index}>
                 <img src={getFlag(trans.lang)} alt="language flag" className="flags"/>
                 <p key={index}>{trans.translatedName}</p>
+                {isEditMode && <button id="delete-trans" onClick={(e)=>{handleRemoveLang(e,index)}}>❌</button>}
               </div>
             )
           })}
@@ -164,7 +197,7 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
         <div id="new-translation" className="flex-c align-start g10 w-100">
           <label>Add translation: </label>
           <div className="flex-r justify-start w-100 g20">
-            <select onChange={handleChange} name="lang" value={flashcardData.translations[0].lang} required disabled={!isEditMode}>
+            <select onChange={handleChangeLang} name="lang" value={translation.lang} required disabled={!isEditMode}>
                 <option value="English">English</option>
                 <option value="Spanish">Spanish</option>
                 <option value="French">French</option>
@@ -172,19 +205,16 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
                 <option value="Portuguese">Portuguese</option>
                 <option value="Italian">Italian</option>
             </select>
-            <input onChange={handleChange} placeholder="Name" type="text" name="translatedName" value={flashcardData.translations[0].translatedName} disabled={!isEditMode}/>
+            <input onChange={handleChangeLang} placeholder="Name" type="text" name="translatedName" value={translation.translatedName} disabled={!isEditMode}/>
+            <button onClick={handleAddLang} disabled={!isEditMode}>+</button>
           </div>
           <div className="w-100">
             <div className="flex-c g10 align-start w-100">
-            {/* <textarea onChange={handleChange} className="w-100" placeholder="Description" type="text" name="translatedDescription" value={flashcardData.translations[0].translatedDescription} disabled={!isEditMode}/> */}
             </div>
-
           </div>
         </div>
-
-
+        {errorMessage && <p style={{color: "red"}}>{errorMessage}</p>}
         <div className="flex-r g10">
-          {/* {isEditMode && <button onClick={handleEditMode}>Back</button>} */}
           {<button onClick={handleEditMode}>{isEditMode? "Discard": "Edit"}</button>}
           {isEditMode && <button onClick={handleSave}>Save</button>}
           {<button onClick={handleDelete}>Delete</button>}

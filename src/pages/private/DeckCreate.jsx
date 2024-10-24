@@ -21,6 +21,7 @@ function DeckCreate() {
   const [tag, setTag] = useState("");
   const [tagsList, setTagsList] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [newFlashcard, setNewFlashcard] = useState({
     cardName: "",
@@ -78,6 +79,11 @@ function DeckCreate() {
   //Call to Post new deck in db
   const handleCreate = async (e) => {
     e.preventDefault();
+    if(!deckName || !languages || !flashcardsList.length) {
+      setErrorMessage("Complete all fields")
+      return;
+    }
+    
     try {
       const newDeck = {
         deckName,
@@ -127,6 +133,7 @@ function DeckCreate() {
         <div className='flex-r justify-between w-100'>
           <h2>Create new Deck</h2>
           <div className='flex-r g20'>
+            {errorMessage && <p style={{color: "red"}}>{errorMessage}</p>}
             <button onClick={handleDiscard}>Discard</button>
             <button onClick={handleCreate}>Create</button>
           </div>    
@@ -164,7 +171,6 @@ function DeckCreate() {
 
         
         {/* Languages select */}
-        {/*//TODO Update languages with Flashcards value / Permitir solo estos languages en flashcards */}
         <div className='flex-c align-start g10'>
           <p>What languages ​​does your deck support?</p>
           <div id="languages-checkbox" className='flex-r wrap w-100 g10'>

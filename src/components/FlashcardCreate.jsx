@@ -12,7 +12,8 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
 
   const [translation, setTranslation] = useState({lang:"English", translatedName:"", translatedDescription:""});
   const [translationsList, setTranslationsList] = useState([]);
-  
+  const [errorMessage, setErrorMessage] = useState("");
+
   //Handle functions
   const handleChangeFlashcard = (e) => {
     const clone = structuredClone(newFlashcard);
@@ -26,10 +27,20 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
   }
   const handleAddLang = (e) => {
     e.preventDefault();
+    if(!translation.translatedName){
+      setErrorMessage("Translation required!")
+      return;
+    }
+    setErrorMessage("")
     setTranslationsList([...translationsList, translation]);
   }
   const handleAddFlashcard = async (e) => {
     e.preventDefault();
+    if(!newFlashcard.cardName || !newFlashcard.translations) {
+      setErrorMessage("Complete required fields!")
+      return;
+    }
+    setErrorMessage("")
     try {
       const clone = structuredClone(newFlashcard);
       clone.translations = translationsList;
@@ -140,6 +151,7 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
             </div>
           </div> */}
         </div>
+        {errorMessage && <p style={{color: "red"}}>{errorMessage}</p>}
         <button id="add-btn" onClick={handleAddFlashcard} disabled={!translationsList.length}>Add</button>
       </div>
 
