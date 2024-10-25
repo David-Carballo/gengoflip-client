@@ -51,9 +51,7 @@ function App() {
 
         <Route path="/error" element={<Error/>} />
         <Route path="*" element={<NotFound/>} />
-      </Routes>
-      {/* {!isLoggedIn && <Footer/>} */}
-      
+      </Routes>      
 
     </div>
   )

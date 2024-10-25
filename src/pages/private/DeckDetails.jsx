@@ -25,7 +25,6 @@ function DeckDetails() {
 
   useEffect(()=>{
     getDeckDetails();
-    // getUserLibrary();
   },[])
   
   useEffect(()=>{
@@ -121,7 +120,6 @@ function DeckDetails() {
         <button onClick={handleLearn} id="learn-btn">LEARN</button>
       </div>
       {/* FLASHCARDS */}
-      {/* //TODO isEditMode & add [+] */}
       <div className="flex-r wrap g20 w-100">
         {deckDetails.flashcards.map((flashcard,index)=>{
           return(

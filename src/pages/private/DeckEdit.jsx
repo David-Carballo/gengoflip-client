@@ -289,7 +289,6 @@ function DeckEdit() {
         <p>Flashcards</p>
         {/* Flashcards Creation */}
         {isAdding && <FlashcardCreate setIsCreating={setIsAdding} newFlashcard={newFlashcard} setNewFlashcard={setNewFlashcard} setFlashcardsList={setFlashcardsList}/>}
-        {/* {deckDetails.flashcards.map((fc,index)=><FlashcardDetails key={`fc-${index}`} flashId={fc._id} setDeckDetails={setDeckDetails}/>)} */}
         <div id="flashcards-container" className="flex-r wrap justify-start w-100">
           <div onClick={handleAddNewFlashcard} id="flashcard-item-add">
             <h2>+</h2>
@@ -304,8 +303,6 @@ function DeckEdit() {
                 </div>}
                 <div>
                   <img onClick={()=>handleDropMenu(index)} id="edit-btn" src={editBtn} alt="edit button" />
-                  {/* <img src={flashcard.imageUrl} alt="flashcard image" /> */}
-                  {/* <img src={fc.imageUrl} alt="flashcard image" /> */}
                   <h5>{fc.cardName}</h5>
                 </div>
               </div>

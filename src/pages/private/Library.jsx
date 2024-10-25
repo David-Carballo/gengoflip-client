@@ -113,7 +113,6 @@ function Library() {
         <Link to="/decks/create"><button>+  Add deck</button></Link>
       </div>
       <div className="flex-r wrap g20 w-80">  
-        {/* {allDecks.map((deck,index)=> <Deck key={`dcard-${index}`} deck={deck}/>)} */}
         {allDecks
         .filter((deck)=> {
           if(deck.deckName.toLowerCase().includes(searchValue.toLowerCase())) return true;
@@ -140,12 +139,7 @@ function Library() {
 
                 <div className="flex-c justify-between align-start h-100">
                   <h5>{deck.deckName}</h5>
-                  {/* <div className="flex-r wrap g10">
-                    {tags.map((tag,index) => {
-                      return (<label key={`tag-${index}`} id="deck-tags">{tag}</label>)
-                      })
-                    }
-                  </div> */}
+
                   <div id="languages-list" className="flex-r">
                     {deck.languages.map((language)=>{
                       if(language==="English") return(<img key={language} src={enIcon}/>)

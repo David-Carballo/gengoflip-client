@@ -128,8 +128,6 @@ function DeckCreate() {
       return;
     }
 
-    // setIsUploading(true); // to start the loading animation
-
     const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
     uploadData.append("image", e.target.files[0]);
 

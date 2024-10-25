@@ -1,11 +1,11 @@
 import '../../styles/Contact.css'
-import logoGithub from '../../assets/github.svg'
+import logo from '/logo.png'
 
 function Contact() {
   return(
     <section id="contact" className="contact-header flex-c justify-between">
         <h1>Contact us</h1>
-        
+        <img src={logo} alt="logo web" />
         <p>Our platform allows users to register, create, and manage their own sets of flashcards to practice vocabulary in a personalized way. Users can review their flashcards and improve their learning interactively. The website is part of the final project for a course, demonstrating skills in web application development using modern technologies</p>
         <div>
           <p>Do you have any questions or comments? We would love to hear from you!</p>

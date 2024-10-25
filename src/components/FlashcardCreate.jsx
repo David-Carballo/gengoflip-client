@@ -64,7 +64,6 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
   const handleFileUpload = async (e) => {
 
     if (!e.target.files[0]) {
-      // to prevent accidentally clicking the choose file button and not selecting a file
       return;
     }
 
@@ -107,9 +106,7 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
           </div>
           <input onChange={handleChangeFlashcard} placeholder="Name" type="text" name="cardName" value={newFlashcard.cardName}/>
         </div>
-        {/* <div className="flex-c align-center w-100">
-          <textarea onChange={handleChangeFlashcard} className="w-100" placeholder="Write here the flashcard's description..."type="text" name="description" rows="3" value={newFlashcard.description}/>
-        </div> */}
+
         <div className="flex-r justify-start w-100 g20">
           <label>Original Language</label>
           <select onChange={handleChangeFlashcard} value={newFlashcard.originalLang} name="originalLang" required>
@@ -145,11 +142,6 @@ function FlashcardCreate({setIsCreating, newFlashcard, setNewFlashcard, setFlash
             <input onChange={handleChangeLang} placeholder="Name" type="text" name="translatedName" value={translation.translatedName}/>
             <button onClick={handleAddLang}>+</button>
           </div>
-          {/* <div className="w-100">
-            <div className="flex-c g10 align-start w-100">
-              <textarea onChange={handleChangeLang} className="w-100" placeholder="Description" type="text" name="translatedDescription" value={translation.translatedDescription}/>
-            </div>
-          </div> */}
         </div>
         {errorMessage && <p style={{color: "red"}}>{errorMessage}</p>}
         <button id="add-btn" onClick={handleAddFlashcard} disabled={!translationsList.length}>Add</button>

@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "./Footer";
 import '../styles/Sidebar.css'
 import homeIcon from '../assets/home.svg'
 import libraryIcon from '../assets/library.svg'

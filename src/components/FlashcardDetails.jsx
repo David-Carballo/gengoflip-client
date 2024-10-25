@@ -21,7 +21,6 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
     try {
       const response = await service.get(`${import.meta.env.VITE_SERVER_URL}/api/flashcards/${flashId}`)
       setFlashcardData(response.data);
-      console.log(response.data);
     } 
     catch (error) {
       navigate("/error")
@@ -61,7 +60,6 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
     }
     const clone = structuredClone(flashcardData);
     clone.translations.push(translation)
-    console.log(clone);
     setFlashcardData(clone);
   }
 
@@ -70,7 +68,6 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
     e.preventDefault();
     const clone = structuredClone(flashcardData);
     clone.translations.splice(index,1);
-    console.log(clone);
     setFlashcardData(clone);
   }
 
@@ -115,7 +112,6 @@ function FlashcardDetails({flashId, setDeckDetails, setIsCreating, handleDropMen
   const handleFileUpload = async (e) => {
 
     if (!e.target.files[0]) {
-      // to prevent accidentally clicking the choose file button and not selecting a file
       return;
     }
     const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData

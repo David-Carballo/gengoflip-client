@@ -125,7 +125,7 @@ function Dashboard() {
 
       <Link to="/profile" id="dashboard-profile" className='w-80'>
           <div className='title'>
-            <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="profile-img"/>
+            <img src={userData.profileImg? userData.profileImg : "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"} alt="profile-img"/>
             <h3 className="w-100">{userData.username}</h3>
           </div>
           <div className="container flex-r align-center g10">

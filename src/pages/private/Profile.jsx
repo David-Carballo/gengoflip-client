@@ -74,14 +74,10 @@ function Profile() {
   }
 
   const handleFileUpload = async (e) => {
-    // console.log("The file to be uploaded is: ", e.target.files[0]);
-
     if (!e.target.files[0]) {
       // to prevent accidentally clicking the choose file button and not selecting a file
       return;
     }
-
-    // setIsUploading(true); // to start the loading animation
 
     const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
     uploadData.append("image", e.target.files[0]);
