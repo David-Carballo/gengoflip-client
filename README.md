@@ -2,7 +2,7 @@
 
 ## [See the App!](https://gengoflip.netlify.app/)
 
-![App Logo](your-image-logo-path-or-name)
+![App Logo](/logo.png)
 
 ## Description
 
